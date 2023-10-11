@@ -1,0 +1,48 @@
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\bin\Debug\net7.0\Domain.deps.json
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\bin\Debug\net7.0\Domain.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\bin\Debug\net7.0\Domain.pdb
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.AssemblyReference.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\refint\Domain.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\Domain.pdb
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Domain\obj\Debug\net7.0\ref\Domain.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.deps.json
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.pdb
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.AssemblyReference.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\refint\Domain.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.pdb
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\ref\Domain.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.deps.json
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\bin\Debug\net7.0\Domain.pdb
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.AssemblyReference.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\refint\Domain.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\Domain.pdb
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Domain\obj\Debug\net7.0\ref\Domain.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\bin\Debug\net7.0\Domain.deps.json
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\bin\Debug\net7.0\Domain.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\bin\Debug\net7.0\Domain.pdb
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.AssemblyReference.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfoInputs.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.AssemblyInfo.cs
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\refint\Domain.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\Domain.pdb
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Domain\obj\Debug\net7.0\ref\Domain.dll

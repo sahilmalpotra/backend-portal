@@ -1,0 +1,68 @@
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.runtimeconfig.json
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.pdb
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CopyComplete
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
+C:\Users\priyanka.aggarwal2\Desktop\Investment Portal\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.runtimeconfig.json
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.pdb
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CopyComplete
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
+C:\Users\ritika.agrawal3\Downloads\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.runtimeconfig.json
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.pdb
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CopyComplete
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
+C:\Users\amandeep.kumar1\Downloads\Investment Portal (3) (1)\Investment Portal (3)\Investment Portal\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.runtimeconfig.json
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\bin\Debug\net7.0\Domain.pdb
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CopyComplete
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
