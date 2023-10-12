@@ -342,3 +342,5 @@ C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\In
 C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Investment Portal\obj\Debug\net7.0\InvestmentPortal.pdb
 C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Investment Portal\obj\Debug\net7.0\InvestmentPortal.genruntimeconfig.cache
 C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Investment Portal\obj\Debug\net7.0\ref\InvestmentPortal.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Investment Portal\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+C:\Users\sahil.malpotra\Downloads\Investment Portal (1) (1)\Investment Portal\Investment Portal\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll

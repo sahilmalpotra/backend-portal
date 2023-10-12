@@ -2,7 +2,7 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Domain.Interfaces;
-
+using Investment_Portal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,12 @@ builder.Services.AddTransient<IStrategy, StrategyRepo>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+builder.Services.AddApiVersioning();
 builder.Services.AddSwaggerGen();
 
 //builder.Services.AddCors(options =>
@@ -44,11 +50,24 @@ builder.Services.AddCors(options => { options.AddPolicy("AllowAll", builder => b
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseSwagger(
+    options => options.RouteTemplate = $"swagger/{ApiConstants.ServiceName}/{{documentName}}/swagger.json");
+
+
+
+
+
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.RoutePrefix = "swagger/incinvest";
+    options.SwaggerEndpoint($"/swagger/{ApiConstants.ServiceName}/v1/swagger.json", "V1");
+});
 
 app.UseHttpsRedirection();
 

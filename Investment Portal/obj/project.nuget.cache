@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OLRzCozAJIvDuofNEHtLV0Ie46RX8wMqtVtz2Bwy96wZwrbpRNhEt/wBLUHPTqDCg4rsveL/Sz2LQasogKGVEw==",
+  "dgSpecHash": "M7eO+0HOZ1LWDhwfm4BkXNQ4UW8+aKAvfKZVhBgwKfEqXE3EhQp6laoteFLglAifMSGQOvZWSubapudM3rfqpw==",
   "success": true,
   "projectFilePath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\InvestmentPortal.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\sahil.malpotra\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
+    "C:\\Users\\sahil.malpotra\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning.apiexplorer\\5.0.0\\microsoft.aspnetcore.mvc.versioning.apiexplorer.5.0.0.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
