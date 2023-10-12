@@ -1,0 +1,1015 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "InvestmentPortal",
+    "description": "Capstone Project",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Advisor": {
+      "get": {
+        "tags": [
+          "Advisor"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Advisor"
+            }
+          }
+        }
+      }
+    },
+    "/api/AdvisorSignUp/signup": {
+      "post": {
+        "tags": [
+          "AdvisorSignUp"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Advisor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/AdvisorSignUp/login": {
+      "post": {
+        "tags": [
+          "AdvisorSignUp"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AdvisorLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/AdvisorSignUp/{id}": {
+      "delete": {
+        "tags": [
+          "AdvisorSignUp"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClientSignUp/signup": {
+      "post": {
+        "tags": [
+          "ClientSignUp"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClientSignUp/login": {
+      "post": {
+        "tags": [
+          "ClientSignUp"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ClientLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClientSignUp/complete-profile": {
+      "post": {
+        "tags": [
+          "ClientSignUp"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ClientProfileUpdateModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClientSignUp/{id}": {
+      "delete": {
+        "tags": [
+          "ClientSignUp"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/investments": {
+      "post": {
+        "tags": [
+          "Investment"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Investment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/investments/{Id}": {
+      "get": {
+        "tags": [
+          "Investment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/investments/{id}": {
+      "put": {
+        "tags": [
+          "Investment"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Investment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Investment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/Add": {
+      "post": {
+        "tags": [
+          "Strategy"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Strategy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies": {
+      "get": {
+        "tags": [
+          "Strategy"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{investmentId}/By-InvestmentId": {
+      "get": {
+        "tags": [
+          "Strategy"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "investmentId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{StrategyId}/By-StrategyId": {
+      "get": {
+        "tags": [
+          "Strategy"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StrategyId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{clientId}/By-ClientId": {
+      "get": {
+        "tags": [
+          "Strategy"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{strategyId}/Update-by-Advisor": {
+      "put": {
+        "tags": [
+          "Strategy"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "strategyId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Strategy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{id}": {
+      "delete": {
+        "tags": [
+          "Strategy"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/strategies/{strategyId}/Update-by-Client": {
+      "put": {
+        "tags": [
+          "Strategy"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "strategyId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "description": "The requested API version",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StatusUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Advisor": {
+      "required": [
+        "address",
+        "city",
+        "confirmPassword",
+        "email",
+        "firstName",
+        "lastName",
+        "numberOfClients",
+        "password",
+        "phoneNumber",
+        "pinCode",
+        "state",
+        "strategy"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "lastName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "email": {
+          "format": "email",
+          "minLength": 1,
+          "type": "string"
+        },
+        "password": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "confirmPassword": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "phoneNumber": {
+          "minLength": 1,
+          "pattern": "^\\d{10}$",
+          "type": "string"
+        },
+        "address": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "city": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "state": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "pinCode": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "strategy": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "numberOfClients": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AdvisorLogin": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "format": "email",
+          "minLength": 1,
+          "type": "string"
+        },
+        "password": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Client": {
+      "required": [
+        "accountNumber",
+        "address",
+        "bankName",
+        "city",
+        "confirmPassword",
+        "email",
+        "firstName",
+        "ifscCode",
+        "lastName",
+        "panNumber",
+        "password",
+        "phoneNumber",
+        "pinCode",
+        "state"
+      ],
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "advisorId": {
+          "type": "string"
+        },
+        "firstName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "lastName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "email": {
+          "format": "email",
+          "minLength": 1,
+          "type": "string"
+        },
+        "password": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "confirmPassword": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "phoneNumber": {
+          "minLength": 1,
+          "pattern": "^\\d{10}$",
+          "type": "string"
+        },
+        "address": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "city": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "state": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "pinCode": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "accountNumber": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "bankName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ifscCode": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "panNumber": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "isProfileComplete": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClientLogin": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "format": "email",
+          "minLength": 1,
+          "type": "string"
+        },
+        "password": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClientProfileUpdateModel": {
+      "required": [
+        "accountNumber",
+        "bankName",
+        "ifscCode",
+        "isProfileComplete",
+        "panNumber"
+      ],
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "accountNumber": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "bankName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ifscCode": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "panNumber": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "isProfileComplete": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Investment": {
+      "required": [
+        "investmentID"
+      ],
+      "type": "object",
+      "properties": {
+        "investmentID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "clientId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "advisorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "investmentAmount": {
+          "format": "double",
+          "type": "number"
+        },
+        "investmentType": {
+          "type": "string"
+        },
+        "timePeriod": {
+          "type": "string"
+        },
+        "createdDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StatusUpdateRequest": {
+      "required": [
+        "status"
+      ],
+      "type": "object",
+      "properties": {
+        "status": {
+          "minLength": 1,
+          "pattern": "^(Approved|Rejected)$",
+          "type": "string"
+        },
+        "remarks": {
+          "maxLength": 500,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Strategy": {
+      "required": [
+        "advisorId",
+        "amount",
+        "clientId",
+        "expectedAmount",
+        "investmentAmount",
+        "investmentId",
+        "investmentName",
+        "returnPercentage",
+        "status",
+        "timePeriod"
+      ],
+      "type": "object",
+      "properties": {
+        "strategyId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "investmentId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "investmentName": {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "clientId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "advisorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "returnPercentage": {
+          "format": "double",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "investmentAmount": {
+          "format": "double",
+          "type": "number"
+        },
+        "expectedAmount": {
+          "format": "double",
+          "type": "number"
+        },
+        "status": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "timePeriod": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "remarks": {
+          "maxLength": 500,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
