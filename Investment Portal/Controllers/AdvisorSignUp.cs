@@ -36,6 +36,7 @@ namespace InvestmentPortal.Controllers
         {
             if (advisor == null)
             {
+                //return BadRequest("Invalid user data.");
                 return BadRequest(new
                 {
                     message = "Invalid user data.",
@@ -48,6 +49,7 @@ namespace InvestmentPortal.Controllers
             {
                 if (await _context.Advisor.AnyAsync(u => u.Email == advisor.Email))
                 {
+                    //return StatusCode(409, "Email address is already in use.");
                     return StatusCode(409, new
                     {
                         message = "Email address is already in use.",
@@ -58,6 +60,7 @@ namespace InvestmentPortal.Controllers
             }
             catch (Exception ex)
             {
+                // return StatusCode(500, "An error occurred while processing the request.");
                 return StatusCode(500, new
                 {
                     message = "An error occurred while processing the request.",
@@ -74,12 +77,12 @@ namespace InvestmentPortal.Controllers
             advisor.State = advisor.State;
             advisor.PinCode = advisor.PinCode;
             advisor.PhoneNumber = advisor.PhoneNumber;
+            advisor.Strategy = advisor.Strategy;
             advisor.NumberOfClients = 0;
 
             _context.Advisor.Add(advisor);
             await _context.SaveChangesAsync();
 
-            // return Ok("User registered successfully!", user);
             return Ok(new
             {
                 message = "User registered successfully!",
@@ -93,7 +96,6 @@ namespace InvestmentPortal.Controllers
         {
             if (model == null)
             {
-                // return BadRequest("Invalid login data.");
                 return BadRequest(new
                 {
                     message = "Invalid login data.",
@@ -105,20 +107,17 @@ namespace InvestmentPortal.Controllers
 
             if (advisor == null || !VerifyPassword(model.Password, advisor.Password))
             {
-                // return Unauthorized("Invalid email or password.");
                 return Unauthorized(new
                 {
                     message = "Invalid email or password.",
-                    advisor = advisor,
                     code = 401
                 });
             }
 
-
             return Ok(new
             {
                 message = "Login successful!",
-                advisor = advisor,
+                advisorId = advisor.Id,
                 code = 200
             });
         }
@@ -126,18 +125,14 @@ namespace InvestmentPortal.Controllers
 
         private string HashPassword(string password)
         {
-
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
             return hashedPassword;
-
         }
-
 
         private bool VerifyPassword(string inputPassword, string storedPassword)
         {
             return BCrypt.Net.BCrypt.Verify(inputPassword, storedPassword);
-
         }
 
 
@@ -166,25 +161,6 @@ namespace InvestmentPortal.Controllers
                     message = "Advisor deleted successfully.",
                     code = 200
                 });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    message = "An error occurred while processing the request.",
-                    details = ex.Message,
-                    code = 500
-                });
-            }
-        }
-
-        [HttpGet("clients-by-advisor/{advisorId}")]
-        public async Task<IActionResult> GetClientsByAdvisorId(int advisorId)
-        {
-            try
-            {
-                var clients = await _context.Client.Where(c => c.AdvisorId == advisorId).ToListAsync();
-                return Ok(clients);
             }
             catch (Exception ex)
             {

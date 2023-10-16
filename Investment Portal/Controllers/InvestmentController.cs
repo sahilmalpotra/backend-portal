@@ -16,62 +16,30 @@ namespace Investment_Portal.Controllers
 {
     [EnableCors("AllowAll")]
 
+
+
     [Route("api/investments")]
     [ApiController]
-
     public class InvestmentController : ControllerBase
     {
+        private readonly IInvestment _investmentService;
 
-        private readonly AppDbContext _context;
-
-        public object JsonRequestBehavior { get; private set; }
-
-        public InvestmentController(AppDbContext context)
+        public InvestmentController(IInvestment investmentService)
         {
-            _context = context;
+            _investmentService = investmentService;
         }
-
-
-
-        // POST api/investments
-        [HttpPost("New Investment")]
-        public async Task<IActionResult> CreateInvestment([FromBody] Investment model)
+        
+            // POST api/investments
+            [HttpPost]
+        public IActionResult CreateInvestment([FromBody] Investment model)
         {
             try
             {
-
+                
                 if (model == null)
                 {
                     return BadRequest("Invalid input data.");
                 }
-
-                var client = _context.Client.FirstOrDefault(c => c.ClientId == model.ClientId);
-
-                if (client == null)
-                {
-                    return BadRequest("Client not found.");
-                }
-
-                if (client.AdvisorId == 0)
-                {
-                    var lowestClientAdvisor = _context.Advisor
-                        .OrderBy(a => a.NumberOfClients)
-                        .FirstOrDefault();
-
-                    if (lowestClientAdvisor != null)
-                    {
-                        lowestClientAdvisor.NumberOfClients++;
-                        _context.Advisor.Update(lowestClientAdvisor);
-
-                        client.AdvisorId = lowestClientAdvisor.AdvisorId;
-                        _context.Client.Update(client);
-
-
-                        _context.SaveChanges();
-
-                    }
-                }
-
 
                 var newInvestment = new Investment
                 {
@@ -80,19 +48,13 @@ namespace Investment_Portal.Controllers
                     TimePeriod = model.TimePeriod,
                     CreatedDate = DateTime.UtcNow,
                     ClientId = model.ClientId,
-                    AdvisorId = client.AdvisorId
+                    AdvisorId = model.AdvisorId
                 };
 
+                
+                var createdInvestment = _investmentService.CreateInvestment(newInvestment);
 
-                var createdInvestment = _context.Investments.Add(newInvestment);
-                _context.SaveChanges();
-
-                return Ok(new
-                {
-                    message = "Investment Successfully Generated",
-                    Investment = newInvestment,
-                    code = 200
-                });
+                return CreatedAtAction("GetInvestment", new { id = createdInvestment.InvestmentID }, createdInvestment);
             }
             catch (Exception ex)
             {
@@ -101,67 +63,28 @@ namespace Investment_Portal.Controllers
         }
 
         // GET api/investments/{id}
-        [HttpGet("{id}")]
-        public IActionResult GetInvestmentById(int id)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetInvestment(int Id)
         {
-            try
-            {
-                var investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == id);
+            var investment = _investmentService.GetInvestmentById(Id);
 
-                if (investment == null)
+
+            if (investment == null)
+            {
+                return NotFound(new
                 {
-                    return NotFound();
-                }
-
-                return Ok(investment);
+                    message = "Investment not found.",
+                    code = 404
+                });
             }
-            catch (Exception ex)
+
+            return Ok(new
             {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // GET api/investments/client/{clientId}
-        [HttpGet("client/{clientId}")]
-        public IActionResult GetInvestmentsByClientId(int clientId)
-        {
-            try
-            {
-                var investments = _context.Investments.Where(i => i.ClientId == clientId).ToList();
-
-                if (investments == null || investments.Count() == 0)
-                {
-                    return NotFound();
-                }
-
-                return Ok(investments);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // GET api/investments/advisor/{advisorId}
-        [HttpGet("advisor/{advisorId}")]
-        public IActionResult GetInvestmentsByAdvisorId(int advisorId)
-        {
-            try
-            {
-                var investments = _context.Investments.Where(i => i.AdvisorId == advisorId).ToList();
-
-                if (investments == null || investments.Count() == 0)
-                {
-                    return NotFound();
-                }
-
-                return Ok(investments);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                message = "Investment retrieved successfully.",
+                investment,
+                code = 200
+            });
+           }
 
 
         // PUT api/investments/{id}
@@ -174,20 +97,15 @@ namespace Investment_Portal.Controllers
                 {
                     return BadRequest("Invalid input data.");
                 }
-                var existingInvestment = _context.Investments.FirstOrDefault(i => i.InvestmentID == id);
 
-                if (existingInvestment == null)
+                var updatedInvestment = _investmentService.UpdateInvestment(model);
+
+                if (updatedInvestment == null)
                 {
                     return NotFound();
                 }
 
-                existingInvestment.InvestmentAmount = model.InvestmentAmount;
-                existingInvestment.InvestmentType = model.InvestmentType;
-                existingInvestment.TimePeriod = model.TimePeriod;
-
-                _context.SaveChanges();
-
-                return Ok(existingInvestment);
+                return Ok(updatedInvestment);
             }
             catch (Exception ex)
             {
@@ -201,17 +119,14 @@ namespace Investment_Portal.Controllers
         {
             try
             {
-                var existingInvestment = _context.Investments.FirstOrDefault(i => i.InvestmentID == id);
+                var deletedInvestment = _investmentService.GetInvestmentById(id);
 
-                if (existingInvestment == null)
+                if (deletedInvestment == null)
                 {
                     return NotFound();
                 }
 
-                _context.Investments.Remove(existingInvestment); // Remove the investment
-                _context.SaveChanges(); // Save the changes
-
-                return Ok(existingInvestment);
+                return Ok(deletedInvestment);
             }
             catch (Exception ex)
             {

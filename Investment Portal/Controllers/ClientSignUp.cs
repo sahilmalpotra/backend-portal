@@ -72,12 +72,12 @@ namespace Investment_Portal.Controllers
             client.State = client.State;
             client.PinCode = client.PinCode;
             client.PhoneNumber = client.PhoneNumber;
-            client.AdvisorId = 0;
+            client.AdvisorId = "";
             client.AccountNumber = ""; // Set to empty initially
             client.BankName = "";      // Set to empty initially
             client.IfscCode = "";      // Set to empty initially
             client.PanNumber = "";     // Set to empty initially
-                                       // client.InvestmentAmount = 0;// Set to 0 initially
+           // client.InvestmentAmount = 0;// Set to 0 initially
             client.IsProfileComplete = false; // Profile is not complete initially
 
             _context.Client.Add(client);
@@ -121,7 +121,7 @@ namespace Investment_Portal.Controllers
                 {
                     message = "Profile is not complete. Please provide the missing information.",
                     client = client,
-                    code = 202
+                    code = 202 
                 });
             }
 
@@ -165,8 +165,8 @@ namespace Investment_Portal.Controllers
                 });
             }
 
-            if (client.AccountNumber == model.AccountNumber ||
-                 client.BankName == model.BankName ||
+            if ( client.AccountNumber == model.AccountNumber ||
+                 client.BankName == model.BankName  ||
                  client.IfscCode == model.IfscCode ||
                  client.PanNumber == model.PanNumber)
             {
@@ -180,7 +180,7 @@ namespace Investment_Portal.Controllers
             client.BankName = model.BankName;
             client.IfscCode = model.IfscCode;
             client.PanNumber = model.PanNumber;
-            // client.InvestmentAmount = model.InvestmentAmount;
+           // client.InvestmentAmount = model.InvestmentAmount;
             client.IsProfileComplete = true;
 
             _context.SaveChanges();

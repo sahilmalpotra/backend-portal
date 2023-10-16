@@ -43,16 +43,16 @@ namespace Infrastructure.Repositories
                 existingInvestment.CreatedDate = investment.CreatedDate;
             }
 
-            return investment;
+           return investment;
 
         }
 
         public void DeleteInvestment(int id)
         {
-
+            
             var existingInvestment = _investments.FirstOrDefault(i => i.InvestmentID == id);
             if (existingInvestment != null)
-            {
+            {               
                 _investments.Remove(existingInvestment);
             }
         }
@@ -63,15 +63,6 @@ namespace Infrastructure.Repositories
             return investment;
         }
 
-        public IEnumerable<Investment> GetInvestmentsByClientId(int clientId)
-        {
-            return _investments.Where(i => i.ClientId == clientId);
-        }
-
-        public IEnumerable<Investment> GetInvestmentsByAdvisorId(int advisorId)
-        {
-            return _investments.Where(i => i.AdvisorId == advisorId);
-        }
 
         public IEnumerable<Investment> GetAllInvestments()
         {
