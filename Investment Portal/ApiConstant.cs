@@ -8,3 +8,5 @@
 #pragma warning restore S2339 // Public constant members should not be used
     }
 }
+
+//changes in project

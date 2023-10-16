@@ -13,6 +13,7 @@ namespace Domain.Interfaces
         Task<IEnumerable<Strategy>> GetStrategiesByInvestmentIdAsync(int investmentId);
         Task<Strategy> GetStrategyByStrategyIdAsync(int strategyId);
         Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(int clientId);
+        Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(int advisorId);
         Task<int> AddStrategyAsync(Strategy strategy);
         Task UpdateStrategyAsync(Strategy strategy);
         Task DeleteStrategyAsync(int strategyId);

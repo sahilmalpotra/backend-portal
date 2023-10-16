@@ -16,8 +16,8 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientId { get; set; }
 
-        [ForeignKey(nameof(Advisor))]
-        public string AdvisorId { get; set; }
+        [Required]
+        public int AdvisorId { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
@@ -80,6 +80,5 @@ namespace Domain.Entities
 
         public bool IsProfileComplete { get; set; }
 
-       // public virtual ICollection<Investments> Investments { get; set; }
     }
 }

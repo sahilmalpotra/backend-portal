@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\InvestmentPortal.csproj": {}
+    "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Investment Portal\\InvestmentPortal.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj": {
+    "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\obj\\",
+        "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\priyanka.aggarwal2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\priyanka.aggarwal2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -88,21 +88,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj": {
+    "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\priyanka.aggarwal2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\priyanka.aggarwal2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -149,21 +149,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\priyanka.aggarwal2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\priyanka.aggarwal2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -177,8 +177,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj"
               }
             }
           }
@@ -228,21 +228,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\InvestmentPortal.csproj": {
+    "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Investment Portal\\InvestmentPortal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\InvestmentPortal.csproj",
+        "projectUniqueName": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Investment Portal\\InvestmentPortal.csproj",
         "projectName": "InvestmentPortal",
-        "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\InvestmentPortal.csproj",
-        "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Investment Portal\\obj\\",
+        "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Investment Portal\\InvestmentPortal.csproj",
+        "packagesPath": "C:\\Users\\priyanka.aggarwal2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Investment Portal\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\priyanka.aggarwal2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -250,20 +250,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Application\\Application.csproj"
               },
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\priyanka.aggarwal2\\Desktop\\IncInvest\\backend-portal\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -350,7 +351,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }

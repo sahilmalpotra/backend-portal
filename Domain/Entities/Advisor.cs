@@ -12,9 +12,10 @@ namespace Domain.Entities
     public class Advisor
     {
 
+
         [Key] // This attribute specifies that the property is the primary key
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int AdvisorId { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
@@ -60,11 +61,6 @@ namespace Domain.Entities
         public string PinCode { get; set; }
 
         [Required]
-        [Display(Name = "Strategy")]
-        public string Strategy { get; set; }
-
-        [Required]
         public int NumberOfClients { get; set; }
-
     }
 }

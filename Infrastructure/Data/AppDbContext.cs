@@ -17,7 +17,6 @@ namespace Infrastructure.Data
         public DbSet<Advisor> Advisor { get; set; }
         public DbSet<Investment> Investments { get; set; }
         public DbSet<Strategy> Strategy { get; set; }
-        // public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration)
@@ -26,7 +25,17 @@ namespace Infrastructure.Data
             _configuration = configuration;
         }
 
-       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public void UpdateClientAdvisorId(int clientId, int advisorId)
+        {
+            var client = Client.Find(clientId);
+            if (client != null)
+            {
+                client.AdvisorId = advisorId;
+                SaveChanges();
+            }
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
