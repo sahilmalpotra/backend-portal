@@ -10,7 +10,7 @@ namespace Domain.Interfaces
     public interface IInvestmentService
     {
         Investment CreateInvestment(Investment investment);
-       
+
         Investment GetInvestmentById(int id);
 
         Investment UpdateInvestment(Investment investment);
