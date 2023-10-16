@@ -16,9 +16,9 @@ namespace Investment_Portal.Controllers
 {
     [EnableCors("AllowAll")]
 
-
     [Route("api/investments")]
     [ApiController]
+
     public class InvestmentController : ControllerBase
     {
 
