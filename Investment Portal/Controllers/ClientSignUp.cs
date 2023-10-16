@@ -72,7 +72,7 @@ namespace Investment_Portal.Controllers
             client.State = client.State;
             client.PinCode = client.PinCode;
             client.PhoneNumber = client.PhoneNumber;
-            client.AdvisorId = "";
+            client.AdvisorId = 0;
             client.AccountNumber = ""; // Set to empty initially
             client.BankName = "";      // Set to empty initially
             client.IfscCode = "";      // Set to empty initially

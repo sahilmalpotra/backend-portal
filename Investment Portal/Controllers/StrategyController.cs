@@ -123,6 +123,29 @@ namespace InvestmentPortal.Controllers
         }
 
 
+        [HttpGet("{advisorId}/By-AdvisorId")]
+        public async Task<IActionResult> GetStrategiesByAdvisorId(int advisorId)
+        {
+            var strategies = await _strategyService.GetStrategiesByAdvisorIdAsync(advisorId);
+
+            if (strategies == null || !strategies.Any())
+            {
+                return NotFound(new
+                {
+                    message = "No strategies found for the specified advisor ID.",
+                    code = 404
+                });
+            }
+
+            return Ok(new
+            {
+                message = "Strategies retrieved successfully.",
+                strategies,
+                code = 200
+            });
+        }
+
+
         [HttpPut("{strategyId}/Update-by-Advisor")]
         public async Task<IActionResult> UpdateStrategy(int strategyId, [FromBody] Strategy strategy)
         {

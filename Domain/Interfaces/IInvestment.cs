@@ -14,6 +14,8 @@ namespace Domain.Interfaces
         void DeleteInvestment(int id);
         Investment GetInvestmentById(int id);
         IEnumerable<Investment> GetAllInvestments();
-       
+        IEnumerable<Investment> GetInvestmentsByClientId(int clientId);
+        IEnumerable<Investment> GetInvestmentsByAdvisorId(int advisorId);
+
     }
 }

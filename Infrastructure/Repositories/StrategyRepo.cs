@@ -53,7 +53,14 @@ namespace Infrastructure.Repositories
                     .ToListAsync();
             }
 
-            public async Task UpdateStrategyAsync(Strategy strategy)
+        public async Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(int advisorId)
+        {
+            return await _context.Strategy
+                            .Where(s => s.AdvisorId == advisorId)
+                            .ToListAsync();
+        }
+
+        public async Task UpdateStrategyAsync(Strategy strategy)
             {
                 var existingStrategy = await _context.Strategy
                     .FirstOrDefaultAsync(s => s.StrategyId == strategy.StrategyId);

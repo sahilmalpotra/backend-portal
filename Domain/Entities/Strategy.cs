@@ -11,7 +11,6 @@ namespace Domain.Entities
 {
     public class Strategy
     {
-
         [Key]
         public int StrategyId { get; set; }
 
@@ -35,6 +34,22 @@ namespace Domain.Entities
         [Required]
         [Range(0, 100, ErrorMessage = "Return percentage should be between 0 and 100.")]
         public decimal ReturnPercentage { get; set; }
+
+        [Required]
+        [Range(0, 100, ErrorMessage = "Return percentage should be between 0 and 100.")]
+        public decimal ReturnPercentageAfter6months { get; set; }
+
+        [Required]
+        [Range(0, 100, ErrorMessage = "Return percentage should be between 0 and 100.")]
+        public decimal ReturnPercentageAfter1year { get; set; }
+
+        [Required]
+        [Range(0, 100, ErrorMessage = "Return percentage should be between 0 and 100.")]
+        public decimal ReturnPercentageAfter3year { get; set; }
+
+        [Required]
+        [Range(0, 100, ErrorMessage = "Return percentage should be between 0 and 100.")]
+        public decimal ReturnPercentageAfter5year { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]

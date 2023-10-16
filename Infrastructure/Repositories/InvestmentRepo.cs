@@ -63,6 +63,15 @@ namespace Infrastructure.Repositories
             return investment;
         }
 
+        public IEnumerable<Investment> GetInvestmentsByClientId(int clientId)
+        {
+            return _investments.Where(i => i.ClientId == clientId);
+        }
+
+        public IEnumerable<Investment> GetInvestmentsByAdvisorId(int advisorId)
+        {
+            return _investments.Where(i => i.AdvisorId == advisorId);
+        }
 
         public IEnumerable<Investment> GetAllInvestments()
         {
