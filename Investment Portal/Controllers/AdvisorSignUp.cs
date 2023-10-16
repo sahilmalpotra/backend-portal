@@ -117,7 +117,7 @@ namespace InvestmentPortal.Controllers
             return Ok(new
             {
                 message = "Login successful!",
-                advisorId = advisor.Id,
+                advisorId = advisor.AdvisorId,
                 code = 200
             });
         }
@@ -161,6 +161,25 @@ namespace InvestmentPortal.Controllers
                     message = "Advisor deleted successfully.",
                     code = 200
                 });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while processing the request.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
+
+        [HttpGet("clients-by-advisor/{advisorId}")]
+        public async Task<IActionResult> GetClientsByAdvisorId(int advisorId)
+        {
+            try
+            {
+                var clients = await _context.Client.Where(c => c.AdvisorId == advisorId).ToListAsync();
+                return Ok(clients);
             }
             catch (Exception ex)
             {

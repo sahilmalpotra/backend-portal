@@ -40,7 +40,7 @@ namespace Infrastructure.Repositories
         {
             _context.Advisor.Add(advisor);
             await _context.SaveChangesAsync();
-            return advisor.Id;
+            return advisor.AdvisorId;
         }
 
 
