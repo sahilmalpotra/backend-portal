@@ -2966,11 +2966,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\Application.csproj",
+      "projectPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Application\\Application.csproj",
       "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Application\\obj\\",
+      "outputPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2987,11 +2987,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj"
+            "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }

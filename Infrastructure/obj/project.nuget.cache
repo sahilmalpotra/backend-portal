@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zUYhW5VKGj2SW+bs0Wuem4zaFxpV9naCrTBdWvezppjKYVMgzW9e4M10dfFbXFbbAzzI1Bezv/bs1hZ3yas/7g==",
+  "dgSpecHash": "Ehl+YOaLpDsw3SmgRyMQTag8vpsIU0TfyyGHboSq0AvnJioPA8iolXKTFvhkDTMN30EOEMH9ky1MB9EJOaGKMQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\sahil.malpotra\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

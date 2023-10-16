@@ -2622,11 +2622,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj",
+      "projectUniqueName": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\Domain.csproj",
+      "projectPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\sahil.malpotra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sahil.malpotra\\Downloads\\Investment Portal (1) (1)\\Investment Portal\\Domain\\obj\\",
+      "outputPath": "C:\\Users\\sahil.malpotra\\Desktop\\backend-portal\\backend-portal\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sahil.malpotra\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -2,6 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>https</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>C:\Users\sahil.malpotra\Downloads\Investment Portal %281%29 %281%29\Investment Portal\Investment Portal\Properties\PublishProfiles\investmentportal - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\sahil.malpotra\Desktop\backend-portal\backend-portal\.github\workflows\investmentportal.yml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
