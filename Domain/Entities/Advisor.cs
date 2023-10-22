@@ -59,10 +59,7 @@ namespace Domain.Entities
         [Display(Name = "Pin Code")]
         public string PinCode { get; set; }
 
-        [Required]
-        [Display(Name = "Strategy")]
-        public string Strategy { get; set; }
-
+       
         [Required]
         public int NumberOfClients { get; set; }
 

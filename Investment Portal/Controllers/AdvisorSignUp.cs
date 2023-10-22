@@ -77,7 +77,6 @@ namespace InvestmentPortal.Controllers
             advisor.State = advisor.State;
             advisor.PinCode = advisor.PinCode;
             advisor.PhoneNumber = advisor.PhoneNumber;
-            advisor.Strategy = advisor.Strategy;
             advisor.NumberOfClients = 0;
 
             _context.Advisor.Add(advisor);
@@ -113,13 +112,13 @@ namespace InvestmentPortal.Controllers
                     code = 401
                 });
             }
-
+            model.FirstName = advisor.FirstName;
             return Ok(new
             {
                 message = "Login successful!",
-                advisorId = advisor.AdvisorId,
+                advisor = model,
                 code = 200
-            });
+            }); 
         }
 
 
@@ -135,6 +134,201 @@ namespace InvestmentPortal.Controllers
             return BCrypt.Net.BCrypt.Verify(inputPassword, storedPassword);
         }
 
+
+
+           [HttpPut("update/{id}")]
+
+        public IActionResult UpdateAdvisor(int id, [FromBody] AdvisorUpdateModel updateModel)
+
+        {
+
+            if (updateModel == null)
+
+            {
+
+                return BadRequest(new
+
+                {
+
+                    message = "Invalid update data.",
+
+                    code = 400
+
+                });
+
+            }
+
+
+
+            var advisor = _context.Advisor.FirstOrDefault(a => a.AdvisorId == id);
+
+
+
+            if (advisor == null)
+
+            {
+
+                return NotFound(new
+
+                {
+
+                    message = "Advisor not found.",
+
+                    code = 404
+
+                });
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.FirstName))
+
+            {
+
+                advisor.FirstName = updateModel.FirstName;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.LastName))
+            {
+
+                advisor.LastName = updateModel.LastName;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Email))
+
+            {
+
+                advisor.Email = updateModel.Email;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Password))
+
+            {
+                advisor.Password = updateModel.Password;
+                advisor.ConfirmPassword = advisor.Password;
+                advisor.Password = HashPassword(advisor.Password);
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.PhoneNumber))
+
+            {
+
+                advisor.PhoneNumber = updateModel.PhoneNumber;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Address))
+
+            {
+
+                advisor.Address = updateModel.Address;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.City))
+
+            {
+
+                advisor.City = updateModel.City;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.State))
+
+            {
+
+                advisor.State = updateModel.State;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.PinCode))
+
+            {
+
+                advisor.PinCode = updateModel.PinCode;
+
+            }
+
+
+
+            _context.SaveChanges();
+
+
+
+            return Ok(new
+
+            {
+
+                message = "Advisor information updated successfully.",
+
+                code = 200
+
+            });
+
+        }
+
+        [HttpGet("{id}")]
+
+        public IActionResult GetAdvisor(int id)
+
+        {
+
+            var advisor = _context.Advisor.FirstOrDefault(a => a.AdvisorId == id);
+
+
+
+            if (advisor == null)
+
+            {
+
+                return NotFound(new
+
+                {
+
+                    message = "Advisor not found.",
+
+                    code = 404
+
+                });
+
+            }
+
+
+
+            return Ok(new
+
+            {
+
+                message = "Advisor data retrieved successfully.",
+
+                advisor = advisor,
+
+                code = 200
+
+            });
+
+        }
 
 
         [HttpDelete("{id}")]

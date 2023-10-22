@@ -11,7 +11,7 @@ using System.Net;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
 
-namespace Investment_Portal.Controllers
+namespace InvestmentPortal.Controllers
 {
     [EnableCors("AllowAll")]
 
@@ -73,12 +73,11 @@ namespace Investment_Portal.Controllers
             client.PinCode = client.PinCode;
             client.PhoneNumber = client.PhoneNumber;
             client.AdvisorId = 0;
-            client.AccountNumber = ""; // Set to empty initially
-            client.BankName = "";      // Set to empty initially
-            client.IfscCode = "";      // Set to empty initially
-            client.PanNumber = "";     // Set to empty initially
-           // client.InvestmentAmount = 0;// Set to 0 initially
-            client.IsProfileComplete = false; // Profile is not complete initially
+            client.AccountNumber = client.AccountNumber;
+            client.BankName = client.BankName;
+            client.IfscCode = client.IfscCode;
+            client.PanNumber = client.PanNumber;
+            client.IsProfileComplete = true;
 
             _context.Client.Add(client);
             await _context.SaveChangesAsync();
@@ -124,74 +123,15 @@ namespace Investment_Portal.Controllers
                     code = 202 
                 });
             }
-
+            model.FirstName = client.FirstName;
             return Ok(new
             {
                 message = "Login successful!",
-                client = client,
+                client = model,
                 code = 200
             });
         }
 
-        [HttpPost("complete-profile")]
-        public IActionResult CompleteProfile([FromBody] ClientProfileUpdateModel model)
-        {
-            if (model == null)
-            {
-                return BadRequest(new
-                {
-                    message = "Invalid profile update data.",
-                    code = 400
-                });
-            }
-
-            var client = _context.Client.FirstOrDefault(u => u.ClientId == model.ClientId);
-
-            if (client == null)
-            {
-                return NotFound(new
-                {
-                    message = "Client not found.",
-                    code = 404
-                });
-            }
-
-            if (client.IsProfileComplete)
-            {
-                return BadRequest(new
-                {
-                    message = "Client profile is already complete.",
-                    code = 400
-                });
-            }
-
-            if ( client.AccountNumber == model.AccountNumber ||
-                 client.BankName == model.BankName  ||
-                 client.IfscCode == model.IfscCode ||
-                 client.PanNumber == model.PanNumber)
-            {
-                return BadRequest(new
-                {
-                    message = "No changes detected in profile update.",
-                    code = 400
-                });
-            }
-            client.AccountNumber = model.AccountNumber;
-            client.BankName = model.BankName;
-            client.IfscCode = model.IfscCode;
-            client.PanNumber = model.PanNumber;
-           // client.InvestmentAmount = model.InvestmentAmount;
-            client.IsProfileComplete = true;
-
-            _context.SaveChanges();
-
-            return Ok(new
-            {
-                message = "Client profile has been updated and marked as complete.",
-                client = client,
-                code = 200
-            });
-        }
 
         private string HashPassword(string password)
         {
@@ -208,7 +148,224 @@ namespace Investment_Portal.Controllers
             return BCrypt.Net.BCrypt.Verify(inputPassword, storedPassword);
 
         }
+       
 
+        [HttpPut("update/{id}")]
+
+        public IActionResult UpdateClient(int id, [FromBody] ClientUpdateModel updateModel)
+
+        {
+
+            if (updateModel == null)
+
+            {
+
+                return BadRequest(new
+                {
+                    message = "Invalid update data.",
+                    code = 400
+                });
+
+            }
+
+
+
+            var client = _context.Client.FirstOrDefault(c => c.ClientId == id);
+
+
+
+            if (client == null)
+
+            {
+
+                return NotFound(new
+
+                {
+
+                    message = "Client not found.",
+
+                    code = 404
+
+                });
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.FirstName))
+
+            {
+
+                client.FirstName = updateModel.FirstName;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.LastName))
+
+            {
+
+                client.LastName = updateModel.LastName;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Email))
+
+            {
+
+                client.Email = updateModel.Email;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Password))
+
+            {
+
+                client.Password = updateModel.Password;
+                client.ConfirmPassword = client.Password;
+                client.Password = HashPassword(client.Password);
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.PhoneNumber))
+
+            {
+
+                client.PhoneNumber = updateModel.PhoneNumber;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.Address))
+
+            {
+
+                client.Address = updateModel.Address;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.City))
+
+            {
+
+                client.City = updateModel.City;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.State))
+
+            {
+
+                client.State = updateModel.State;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.PinCode))
+
+            {
+
+                client.PinCode = updateModel.PinCode;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.AccountNumber))
+
+            {
+
+                client.AccountNumber = updateModel.AccountNumber;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.BankName))
+
+            {
+
+                client.BankName = updateModel.BankName;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.IfscCode))
+
+            {
+
+                client.IfscCode = updateModel.IfscCode;
+
+            }
+
+
+
+            if (!string.IsNullOrEmpty(updateModel.PanNumber))
+
+            {
+
+                client.PanNumber = updateModel.PanNumber;
+
+            }
+
+
+
+            _context.SaveChanges();
+
+
+
+            return Ok(new
+
+            {
+
+                message = "Client information updated successfully.",
+
+                code = 200
+
+            });
+
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetClient(int id)
+        {
+            var client = _context.Client.FirstOrDefault(c => c.ClientId == id);
+
+
+
+            if (client == null)
+            {
+                return NotFound(new
+                {
+                    message = "Client not found.",
+                    code = 404
+                });
+            }
+
+
+
+            return Ok(new
+            {
+                message = "Client data retrieved successfully.",
+                client = client,
+                code = 200
+            });
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClient(int id)

@@ -67,5 +67,8 @@ namespace Domain.Entities
 
         [MaxLength(500)]
         public string Remarks { get; set; }
+
+        [Required]
+        public bool Completed { get; set; }
     }
 }

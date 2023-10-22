@@ -22,8 +22,9 @@ namespace Infrastructure.Repositories
 
             public async Task<int> AddStrategyAsync(Strategy strategy)
             {
-                strategy.Status = "Pending";
-                _context.Strategy.Add(strategy);
+            strategy.Status = "Pending";
+            strategy.Completed = false;
+            _context.Strategy.Add(strategy);
                 await _context.SaveChangesAsync();
                 return strategy.StrategyId;
             }
