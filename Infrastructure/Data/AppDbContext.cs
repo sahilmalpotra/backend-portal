@@ -17,6 +17,8 @@ namespace Infrastructure.Data
         public DbSet<Advisor> Advisor { get; set; }
         public DbSet<Investment> Investments { get; set; }
         public DbSet<Strategy> Strategy { get; set; }
+        public DbSet<User> Users { get; set; }
+
         // public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 
