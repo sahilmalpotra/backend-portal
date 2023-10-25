@@ -102,7 +102,7 @@ namespace Service.Services
             return _investmentRepository.GetAllInvestments();
         }
 
-        public Investment GetInvestmentById(int id)
+        public Investment GetInvestmentById(string id)
         {
 
             var investment = _investmentRepository.GetInvestmentById(id);
@@ -114,7 +114,7 @@ namespace Service.Services
 
             return investment;
         }
-        public void DeleteInvestment(int id)
+        public void DeleteInvestment(string id)
         {
             
             var existingInvestment = _investmentRepository.GetInvestmentById(id);

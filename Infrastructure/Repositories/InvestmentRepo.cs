@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories
     public class InvestmentRepo : IInvestment
     {
         private readonly List<Investment> _investments = new List<Investment>();
-        private int _nextInvestmentId = 1;
+        // private int _nextInvestmentId = 1;
 
         public Investment CreateInvestment(Investment investment)
         {
@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(investment));
             }
 
-            investment.InvestmentID = _nextInvestmentId++;
+            //  investment.InvestmentID = _nextInvestmentId++;
             _investments.Add(investment);
 
             return investment;
@@ -43,32 +43,31 @@ namespace Infrastructure.Repositories
                 existingInvestment.CreatedDate = investment.CreatedDate;
             }
 
-           return investment;
+            return investment;
 
         }
 
-        public void DeleteInvestment(int id)
+        public void DeleteInvestment(string id)
         {
-            
             var existingInvestment = _investments.FirstOrDefault(i => i.InvestmentID == id);
             if (existingInvestment != null)
-            {               
+            {
                 _investments.Remove(existingInvestment);
             }
         }
 
-        public Investment GetInvestmentById(int id)
+        public Investment GetInvestmentById(string id)
         {
             var investment = _investments.FirstOrDefault(i => i.InvestmentID == id);
             return investment;
         }
 
-        public IEnumerable<Investment> GetInvestmentsByClientId(int clientId)
+        public IEnumerable<Investment> GetInvestmentsByClientId(string clientId)
         {
             return _investments.Where(i => i.ClientId == clientId);
         }
 
-        public IEnumerable<Investment> GetInvestmentsByAdvisorId(int advisorId)
+        public IEnumerable<Investment> GetInvestmentsByAdvisorId(string advisorId)
         {
             return _investments.Where(i => i.AdvisorId == advisorId);
         }

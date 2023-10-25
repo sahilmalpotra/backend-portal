@@ -17,7 +17,6 @@ namespace Investment_Portal.Controllers
     [EnableCors("AllowAll")]
 
 
-
     [Route("api/investments")]
     [ApiController]
     public class InvestmentController : ControllerBase
@@ -31,7 +30,6 @@ namespace Investment_Portal.Controllers
         {
             _context = context;
         }
-
 
 
         // POST api/investments
@@ -53,7 +51,7 @@ namespace Investment_Portal.Controllers
                     return BadRequest("Client not found.");
                 }
 
-                if (client.AdvisorId == 0)
+                if (client.AdvisorId == "")
                 {
                     var lowestClientAdvisor = _context.Advisor
                         .OrderBy(a => a.NumberOfClients)
@@ -84,6 +82,8 @@ namespace Investment_Portal.Controllers
                     AdvisorId = client.AdvisorId
                 };
 
+                string customId = GenerateCustomInvestmentId();
+                newInvestment.InvestmentID = customId;
 
                 var createdInvestment = _context.Investments.Add(newInvestment);
                 _context.SaveChanges();
@@ -101,30 +101,31 @@ namespace Investment_Portal.Controllers
             }
         }
 
-        // GET api/investments/{id}
-        [HttpGet("{id}")]
-        public IActionResult GetInvestmentById(int id)
+        private string GenerateCustomInvestmentId()
         {
-            try
+            string customInvId;
+            bool isUnique = false;
+            int uniqueNumber = 1;
+            do
             {
-                var investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == id);
+                customInvId = "INV" + uniqueNumber.ToString("D4");
+                bool isIdUnique = !_context.Investments.Any(s => s.InvestmentID == customInvId);
 
-                if (investment == null)
+                if (isIdUnique)
                 {
-                    return NotFound();
+                    isUnique = true;
                 }
-
-                return Ok(investment);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                else
+                {
+                    uniqueNumber++;
+                }
+            } while (!isUnique);
+            return customInvId;
         }
 
         // GET api/investments/client/{clientId}
         [HttpGet("client/{clientId}")]
-        public IActionResult GetInvestmentsByClientId(int clientId)
+        public IActionResult GetInvestmentsByClientId(string clientId)
         {
             try
             {
@@ -145,7 +146,7 @@ namespace Investment_Portal.Controllers
 
         // GET api/investments/advisor/{advisorId}
         [HttpGet("advisor/{advisorId}")]
-        public IActionResult GetInvestmentsByAdvisorId(int advisorId)
+        public IActionResult GetInvestmentsByAdvisorId(string advisorId)
         {
             try
             {
@@ -167,7 +168,7 @@ namespace Investment_Portal.Controllers
 
         // PUT api/investments/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateInvestment(int id, [FromBody] Investment model)
+        public IActionResult UpdateInvestment(string id, [FromBody] Investment model)
         {
             try
             {
@@ -198,7 +199,7 @@ namespace Investment_Portal.Controllers
 
         // DELETE api/investments/{id}
         [HttpDelete("{id}")]
-        public IActionResult DeleteInvestment(int id)
+        public IActionResult DeleteInvestment(string id)
         {
             try
             {

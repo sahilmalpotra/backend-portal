@@ -60,7 +60,7 @@ namespace InvestmentPortal.Controllers
             }
             catch (Exception ex)
             {
-                // return StatusCode(500, "An error occurred while processing the request.");
+                // return StatusCode(500, "An error occurred while processing the request.");
                 return StatusCode(500, new
                 {
                     message = "An error occurred while processing the request.",
@@ -79,6 +79,9 @@ namespace InvestmentPortal.Controllers
             advisor.PhoneNumber = advisor.PhoneNumber;
             advisor.NumberOfClients = 0;
 
+            string customId = GenerateCustomAdvisorId();
+            advisor.AdvisorId = customId;
+
             _context.Advisor.Add(advisor);
             await _context.SaveChangesAsync();
 
@@ -88,6 +91,27 @@ namespace InvestmentPortal.Controllers
                 advisor = advisor,
                 code = 200
             });
+        }
+
+        private string GenerateCustomAdvisorId()
+        {
+            string customAdvId;
+            bool isUnique = false;
+            int uniqueNumber = 1;
+            do
+            {
+                customAdvId = "ADV" + uniqueNumber.ToString("D4");
+                bool isIdUnique = !_context.Advisor.Any(s => s.AdvisorId == customAdvId);
+                if (isIdUnique)
+                {
+                    isUnique = true;
+                }
+                else
+                {
+                    uniqueNumber++;
+                }
+            } while (!isUnique);
+            return customAdvId;
         }
 
         [HttpPost("login")]
@@ -138,7 +162,7 @@ namespace InvestmentPortal.Controllers
 
            [HttpPut("update/{id}")]
 
-        public IActionResult UpdateAdvisor(int id, [FromBody] AdvisorUpdateModel updateModel)
+        public IActionResult UpdateAdvisor(string id, [FromBody] AdvisorUpdateModel updateModel)
 
         {
 
@@ -290,7 +314,7 @@ namespace InvestmentPortal.Controllers
 
         [HttpGet("{id}")]
 
-        public IActionResult GetAdvisor(int id)
+        public IActionResult GetAdvisor(string id)
 
         {
 
@@ -332,7 +356,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdvisor(int id)
+        public async Task<IActionResult> DeleteAdvisor(string id)
         {
             try
             {
@@ -368,7 +392,7 @@ namespace InvestmentPortal.Controllers
         }
 
         [HttpGet("clients-by-advisor/{advisorId}")]
-        public async Task<IActionResult> GetClientsByAdvisorId(int advisorId)
+        public async Task<IActionResult> GetClientsByAdvisorId(string advisorId)
         {
             try
             {

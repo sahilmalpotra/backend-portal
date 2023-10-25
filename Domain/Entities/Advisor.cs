@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         [Key] // This attribute specifies that the property is the primary key
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AdvisorId { get; set; }
+        public string AdvisorId { get; set; }
 
         [Required]
         [Display(Name = "First Name")]

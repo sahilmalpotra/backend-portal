@@ -26,7 +26,7 @@ namespace Infrastructure.Data
             _configuration = configuration;
         }
 
-        public void UpdateClientAdvisorId(int clientId, int advisorId)
+        public void UpdateClientAdvisorId(string clientId, string advisorId)
         {
             var client = Client.Find(clientId);
             if (client != null)

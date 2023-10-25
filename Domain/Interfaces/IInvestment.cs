@@ -11,11 +11,11 @@ namespace Domain.Interfaces
     {
         Investment CreateInvestment(Investment investment);
         Investment UpdateInvestment(Investment investment);
-        void DeleteInvestment(int id);
-        Investment GetInvestmentById(int id);
+        void DeleteInvestment(string id);
+        Investment GetInvestmentById(string id);
         IEnumerable<Investment> GetAllInvestments();
-        IEnumerable<Investment> GetInvestmentsByClientId(int clientId);
-        IEnumerable<Investment> GetInvestmentsByAdvisorId(int advisorId);
+        IEnumerable<Investment> GetInvestmentsByClientId(string clientId);
+        IEnumerable<Investment> GetInvestmentsByAdvisorId(string advisorId);
 
     }
 }

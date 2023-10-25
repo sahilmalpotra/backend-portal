@@ -12,82 +12,184 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
 
 namespace InvestmentPortal.Controllers
+
 {
+
     [EnableCors("AllowAll")]
 
     [Route("api/[controller]")]
+
     [ApiController]
+
     public class ClientSignUp : ControllerBase
+
     {
+
         private readonly AppDbContext _context;
 
         public object JsonRequestBehavior { get; private set; }
 
         public ClientSignUp(AppDbContext context)
+
         {
+
             _context = context;
+
         }
 
 
         [HttpPost("signup")]
+
         public async Task<IActionResult> Signup([FromBody] Client client)
+
         {
+
             if (client == null)
+
             {
+
                 return BadRequest(new
+
                 {
+
                     message = "Invalid user data.",
+
                     client = client,
+
                     code = 400
+
                 });
+
             }
 
             try
+
             {
+
                 if (await _context.Client.AnyAsync(u => u.Email == client.Email))
+
                 {
+
                     return StatusCode(409, new
+
                     {
+
                         message = "Email address is already in use.",
+
                         client = client,
+
                         code = 409
+
                     });
+
                 }
+
             }
+
             catch (Exception ex)
+
             {
+
                 return StatusCode(500, new
+
                 {
+
                     message = "An error occurred while processing the request.",
+
                     details = ex.Message,
+
                     code = 500
+
                 });
+
             }
 
 
             client.Password = HashPassword(client.Password);
 
             client.City = client.City;
+
             client.Address = client.Address;
+
             client.State = client.State;
+
             client.PinCode = client.PinCode;
+
             client.PhoneNumber = client.PhoneNumber;
-            client.AdvisorId = 0;
+
+            client.AdvisorId = "";
+
             client.AccountNumber = client.AccountNumber;
+
             client.BankName = client.BankName;
+
             client.IfscCode = client.IfscCode;
+
             client.PanNumber = client.PanNumber;
+
             client.IsProfileComplete = true;
 
+
+            string customId = GenerateCustomClientId();
+
+            client.ClientId = customId;
+
             _context.Client.Add(client);
+
             await _context.SaveChangesAsync();
 
             return Ok(new
+
             {
+
                 message = "User registered successfully!",
+
                 client = client,
+
                 code = 200
+
             });
+
+        }
+
+        private string GenerateCustomClientId()
+
+        {
+
+            string customCltId;
+
+            bool isUnique = false;
+
+            int uniqueNumber = 1;
+
+            do
+
+            {
+
+                customCltId = "CLT" + uniqueNumber.ToString("D4");
+
+                bool isIdUnique = !_context.Client.Any(s => s.ClientId == customCltId);
+
+                if (isIdUnique)
+
+                {
+
+                    isUnique = true;
+
+                }
+
+                else
+
+                {
+
+                    uniqueNumber++;
+
+                }
+
+            } while (!isUnique);
+
+            return customCltId;
+
         }
 
         [HttpPost("login")]
@@ -152,7 +254,7 @@ namespace InvestmentPortal.Controllers
 
         [HttpPut("update/{id}")]
 
-        public IActionResult UpdateClient(int id, [FromBody] ClientUpdateModel updateModel)
+        public IActionResult UpdateClient(string id, [FromBody] ClientUpdateModel updateModel)
 
         {
 
@@ -342,7 +444,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetClient(int id)
+        public IActionResult GetClient(string id)
         {
             var client = _context.Client.FirstOrDefault(c => c.ClientId == id);
 
@@ -368,7 +470,7 @@ namespace InvestmentPortal.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClient(int id)
+        public async Task<IActionResult> DeleteClient(string id)
         {
             try
             {

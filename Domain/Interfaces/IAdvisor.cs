@@ -7,11 +7,11 @@ namespace Domain.Interfaces
 {
     public interface IAdvisor
     {
-        Task<Advisor> GetAdvisorByIdAsync(int advisorId);
+        Task<Advisor> GetAdvisorByIdAsync(string advisorId);
         Task<IEnumerable<Advisor>> GetAllAdvisorsAsync();
-        Task<int> CreateAdvisorAsync(Advisor advisor);
+        Task<string> CreateAdvisorAsync(Advisor advisor);
         Task UpdateAdvisorAsync(Advisor advisor);
-        Task DeleteAdvisorAsync(int advisorId);
+        Task DeleteAdvisorAsync(string advisorId);
 
         Task<Advisor> GetAdvisorWithLowestClientsAsync();
     }

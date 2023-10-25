@@ -11,9 +11,9 @@ namespace Domain.Entities
     {
         [Required]
         [Key]
-        public int InvestmentID { get; set; }
-        public int ClientId { get; set; }
-        public int AdvisorId { get; set; }
+        public string InvestmentID { get; set; }
+        public string ClientId { get; set; }
+        public string AdvisorId { get; set; }
         public decimal InvestmentAmount { get; set; }
         public string InvestmentType { get; set; }
         public string TimePeriod { get; set; }

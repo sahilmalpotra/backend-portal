@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using System.Security.Claims;
+using Infrastructure.Data;
 
 
 
@@ -16,18 +17,15 @@ namespace InvestmentPortal.Controllers
     public class StrategyController : ControllerBase
     {
         private readonly IStrategy _strategyService;
+        private readonly AppDbContext _context;
 
 
-
-        public StrategyController(IStrategy strategyService)
+        public StrategyController(IStrategy strategyService, AppDbContext context)
         {
             _strategyService = strategyService;
+            _context = context;
+
         }
-
-
-
-
-
 
         [HttpPost("Add")]
         public async Task<IActionResult> AddStrategy([FromBody] Strategy strategy)
@@ -43,20 +41,48 @@ namespace InvestmentPortal.Controllers
 
 
 
-            if (strategy.InvestmentAmount > strategy.Amount)
-            {
-                return BadRequest(new
-                {
-                    message = "Investment amount should be less than the total amount.",
-                    code = 400
-                });
-            }
-
-
-
             try
             {
+                // Calculate the remaining amount
+                decimal sumOfPreviousStrategies = _context.Strategy
+                    .Where(s => s.InvestmentId == strategy.InvestmentId)
+                    .Sum(s => s.InvestmentAmount);
+
+                Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == strategy.InvestmentId);
+
+                if (investment == null)
+                {
+                    return NotFound(new
+                    {
+                        message = "Investment not found.",
+                        code = 404
+                    });
+                }
+
+                if (strategy.InvestmentAmount > investment.InvestmentAmount)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Investment amount should be less than the total amount.",
+                        code = 400
+                    });
+                }
+
+
+                decimal remainingAmount = investment.InvestmentAmount - sumOfPreviousStrategies;
+
+                if (strategy.InvestmentAmount > remainingAmount)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Strategy amount exceeds the remaining investment amount.",
+                        code = 400
+                    });
+                }
+                string customId = GenerateCustomStrategyId();
+                strategy.StrategyId = customId;
                 var addedStrategyId = await _strategyService.AddStrategyAsync(strategy);
+
                 return Ok(new
                 {
                     message = "Strategy added successfully.",
@@ -73,6 +99,27 @@ namespace InvestmentPortal.Controllers
                     code = 500
                 });
             }
+        }
+
+        private string GenerateCustomStrategyId()
+        {
+            string customStrategyId;
+            bool isUnique = false;
+            int uniqueNumber = 1;
+            do
+            {
+                customStrategyId = "STR" + uniqueNumber.ToString("D4");
+                bool isIdUnique = !_context.Strategy.Any(s => s.StrategyId == customStrategyId);
+                if (isIdUnique)
+                {
+                    isUnique = true;
+                }
+                else
+                {
+                    uniqueNumber++;
+                }
+            } while (!isUnique);
+            return customStrategyId;
         }
 
 
@@ -120,7 +167,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpGet("{investmentId}/By-InvestmentId")]
-        public async Task<IActionResult> GetStrategiesByInvestment(int investmentId)
+        public async Task<IActionResult> GetStrategiesByInvestment(string investmentId)
         {
             try
             {
@@ -160,7 +207,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpGet("{StrategyId}/By-StrategyId")]
-        public async Task<IActionResult> GetStrategy(int StrategyId)
+        public async Task<IActionResult> GetStrategy(string StrategyId)
         {
             try
             {
@@ -200,7 +247,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpGet("{clientId}/By-ClientId")]
-        public async Task<IActionResult> GetStrategiesByClientId(int clientId)
+        public async Task<IActionResult> GetStrategiesByClientId(string clientId)
         {
             try
             {
@@ -242,7 +289,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpGet("{advisorId}/By-AdvisorId")]
-        public async Task<IActionResult> GetStrategiesByAdvisorId(int advisorId)
+        public async Task<IActionResult> GetStrategiesByAdvisorId(string advisorId)
         {
             try
             {
@@ -282,7 +329,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpPut("{strategyId}/Update-by-Advisor")]
-        public async Task<IActionResult> UpdateStrategy(int strategyId, [FromBody] Strategy strategy)
+        public async Task<IActionResult> UpdateStrategy(string strategyId, [FromBody] Strategy strategy)
         {
             if (strategy == null || strategyId != strategy.StrategyId)
             {
@@ -320,7 +367,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStrategy(int id)
+        public async Task<IActionResult> DeleteStrategy(string id)
         {
             try
             {
@@ -377,7 +424,7 @@ namespace InvestmentPortal.Controllers
 
 
         [HttpPut("{strategyId}/Update-by-Client")]
-        public async Task<IActionResult> UpdatebyClient(int strategyId, [FromBody] StatusUpdateRequest statusUpdate)
+        public async Task<IActionResult> UpdatebyClient(string strategyId, [FromBody] StatusUpdateRequest statusUpdate)
         {
             if (statusUpdate == null || !ModelState.IsValid)
             {

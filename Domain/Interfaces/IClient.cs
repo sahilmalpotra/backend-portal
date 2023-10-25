@@ -9,10 +9,10 @@ namespace Domain.Interfaces
 {
     public interface IClient
     {
-        Task<Client> GetClientByIdAsync(int clientId);
+        Task<Client> GetClientByIdAsync(string clientId);
         Task<IEnumerable<Client>> GetAllClientsAsync();
-        Task<int> CreateClientAsync(Client client);
+        Task<string> CreateClientAsync(Client client);
         Task UpdateClientAsync(Client client);
-        Task DeleteClientAsync(int clientId);
+        Task DeleteClientAsync(string clientId);
     }
 }

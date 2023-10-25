@@ -6,13 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-
 namespace Infrastructure.Repositories
 {
     public class ClientRepo : IClient
     {
         private readonly AppDbContext _context;
-
 
 
         public ClientRepo(AppDbContext context)
@@ -21,12 +19,10 @@ namespace Infrastructure.Repositories
         }
 
 
-
-        public async Task<Client> GetClientByIdAsync(int clientId)
+        public async Task<Client> GetClientByIdAsync(string clientId)
         {
             return await _context.Client.FindAsync(clientId);
         }
-
 
 
         public async Task<IEnumerable<Client>> GetAllClientsAsync()
@@ -35,14 +31,12 @@ namespace Infrastructure.Repositories
         }
 
 
-
-        public async Task<int> CreateClientAsync(Client client)
+        public async Task<string> CreateClientAsync(Client client)
         {
             _context.Client.Add(client);
             await _context.SaveChangesAsync();
             return client.ClientId;
         }
-
 
 
         public async Task UpdateClientAsync(Client client)
@@ -52,8 +46,7 @@ namespace Infrastructure.Repositories
         }
 
 
-
-        public async Task DeleteClientAsync(int clientId)
+        public async Task DeleteClientAsync(string clientId)
         {
             var client = await _context.Client.FindAsync(clientId);
             if (client != null)
