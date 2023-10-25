@@ -24,11 +24,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Advisor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("AdvisorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -73,22 +71,16 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Strategy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasKey("AdvisorId");
 
                     b.ToTable("Advisor");
                 });
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
-                    b.Property<int>("ClientId")
+                    b.Property<string>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
@@ -160,17 +152,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Investment", b =>
                 {
-                    b.Property<int>("InvestmentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("InvestmentID")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvestmentID"));
+                    b.Property<string>("AdvisorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AdvisorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -193,20 +184,19 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Strategy", b =>
                 {
-                    b.Property<int>("StrategyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("StrategyId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StrategyId"));
+                    b.Property<string>("AdvisorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AdvisorId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("ExpectedAmount")
                         .HasColumnType("decimal(18, 2)");
@@ -214,8 +204,9 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("InvestmentAmount")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int>("InvestmentId")
-                        .HasColumnType("int");
+                    b.Property<string>("InvestmentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvestmentName")
                         .IsRequired()
@@ -228,6 +219,18 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("ReturnPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReturnPercentageAfter1year")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReturnPercentageAfter3year")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReturnPercentageAfter5year")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReturnPercentageAfter6months")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Status")
