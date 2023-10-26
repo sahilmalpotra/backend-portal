@@ -65,9 +65,36 @@ namespace InvestmentPortal.Controllers
 
                 string otp = GenerateOTP();
 
+                client.Password = HashPassword(client.Password);
+
+                client.City = client.City;
+                client.Address = client.Address;
+                client.State = client.State;
+                client.PinCode = client.PinCode;
+                client.PhoneNumber = client.PhoneNumber;
+                client.AdvisorId = "";
+                client.AccountNumber = client.AccountNumber;
+                client.BankName = client.BankName;
+                client.IfscCode = client.IfscCode;
+                client.PanNumber = client.PanNumber;
+                client.IsProfileComplete = true;
+
+                string customId = GenerateCustomClientId();
+                client.ClientId = customId;
+
+                _context.Client.Add(client);
+                await _context.SaveChangesAsync();
+
                 SaveOTPInDatabase(client.Email, otp);
 
                 SendOTPEmail(client.Email, otp);
+
+
+                return Ok(new
+                {
+                    message = "OTP sent to your email for verification.",
+                    code = 200
+                });
             }
 
             catch (Exception ex)
@@ -81,33 +108,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-            client.Password = HashPassword(client.Password);
-
-            client.City = client.City;
-            client.Address = client.Address;
-            client.State = client.State;
-            client.PinCode = client.PinCode;
-            client.PhoneNumber = client.PhoneNumber;
-            client.AdvisorId = "";
-            client.AccountNumber = client.AccountNumber;
-            client.BankName = client.BankName;
-            client.IfscCode = client.IfscCode;
-            client.PanNumber = client.PanNumber;
-            client.IsProfileComplete = true;
-
-            string customId = GenerateCustomClientId();
-            client.ClientId = customId;
-
-            _context.Client.Add(client);
-            await _context.SaveChangesAsync();
-
-            return Ok(new
-            {
-                message = "User registered successfully!",
-                client = client,
-                code = 200
-
-            });
 
         }
 
@@ -314,7 +314,7 @@ namespace InvestmentPortal.Controllers
             return Ok(new
             {
                 message = "Login successful!",
-                client = model,
+                client = client,
                 code = 200
             });
         }

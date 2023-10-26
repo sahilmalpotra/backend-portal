@@ -276,7 +276,7 @@ namespace InvestmentPortal.Controllers
             return Ok(new
             {
                 message = "Login successful!",
-                advisor = model,
+                advisor = advisor,
                 code = 200
             });
         }
