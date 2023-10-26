@@ -6,146 +6,105 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using BCrypt.Net;
-using System.Net.Mail;
 using System.Net;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
+using MailKit.Security;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace InvestmentPortal.Controllers
-
 {
 
     [EnableCors("AllowAll")]
-
     [Route("api/[controller]")]
-
     [ApiController]
 
     public class ClientSignUp : ControllerBase
-
     {
 
         private readonly AppDbContext _context;
-
         public object JsonRequestBehavior { get; private set; }
-
         public ClientSignUp(AppDbContext context)
-
         {
-
             _context = context;
-
         }
 
 
         [HttpPost("signup")]
 
         public async Task<IActionResult> Signup([FromBody] Client client)
-
         {
 
             if (client == null)
-
             {
 
                 return BadRequest(new
-
                 {
-
                     message = "Invalid user data.",
-
                     client = client,
-
                     code = 400
-
                 });
 
             }
 
             try
-
             {
 
                 if (await _context.Client.AnyAsync(u => u.Email == client.Email))
-
                 {
 
                     return StatusCode(409, new
-
                     {
-
                         message = "Email address is already in use.",
-
                         client = client,
-
                         code = 409
-
                     });
-
                 }
 
+                string otp = GenerateOTP();
+
+                SaveOTPInDatabase(client.Email, otp);
+
+                SendOTPEmail(client.Email, otp);
             }
 
             catch (Exception ex)
-
             {
-
                 return StatusCode(500, new
-
                 {
-
                     message = "An error occurred while processing the request.",
-
                     details = ex.Message,
-
                     code = 500
-
                 });
-
             }
 
 
             client.Password = HashPassword(client.Password);
 
             client.City = client.City;
-
             client.Address = client.Address;
-
             client.State = client.State;
-
             client.PinCode = client.PinCode;
-
             client.PhoneNumber = client.PhoneNumber;
-
             client.AdvisorId = "";
-
             client.AccountNumber = client.AccountNumber;
-
             client.BankName = client.BankName;
-
             client.IfscCode = client.IfscCode;
-
             client.PanNumber = client.PanNumber;
-
             client.IsProfileComplete = true;
 
-
             string customId = GenerateCustomClientId();
-
             client.ClientId = customId;
 
             _context.Client.Add(client);
-
             await _context.SaveChangesAsync();
 
             return Ok(new
-
             {
-
                 message = "User registered successfully!",
-
                 client = client,
-
                 code = 200
 
             });
@@ -153,7 +112,6 @@ namespace InvestmentPortal.Controllers
         }
 
         private string GenerateCustomClientId()
-
         {
 
             string customCltId;
@@ -192,6 +150,133 @@ namespace InvestmentPortal.Controllers
 
         }
 
+        private void SaveOTPInDatabase(string email, string otp)
+        {
+
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                user = new User { Email = email, OTP = otp };
+                _context.Users.Add(user);
+            }
+            else
+            {
+                user.OTP = otp;
+            }
+            _context.SaveChanges();
+            Console.WriteLine("OTP saved to database.");
+        }
+
+        [HttpGet("Generate-OTP")]
+        public string GenerateOTP()
+        {
+            Random random = new Random();
+            int otp = random.Next(100000, 999999);
+            return otp.ToString();
+        }
+
+        [HttpPost("send-otp-email")]
+        public void SendOTPEmail(string email, string otp)
+        {
+            using var smtp = new SmtpClient();
+
+            var mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(MailboxAddress.Parse("priyaagg29@gmail.com"));
+            mimeMessage.To.Add(MailboxAddress.Parse(email));
+            mimeMessage.Subject = "Email Verification OTP";
+            mimeMessage.Body = new TextPart(TextFormat.Html)
+            {
+                Text = $"<h1>Your OTP is: {otp}</h1>"
+            };
+
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("priyaagg29@gmail.com", "damz zbnq cvrf iydn");
+
+            smtp.Send(mimeMessage);
+            smtp.Disconnect(true);
+            Console.WriteLine("OTP email sent.");
+        }
+
+
+        [HttpPost("verify-otp")]
+        public IActionResult VerifyOTP([FromBody] EmailVerificationModel model)
+        {
+
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.OTP))
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid verification data.",
+                    code = 400
+                });
+            }
+
+            string storedOTP = GetStoredOTPFromDatabase(model.Email);
+            if (model.OTP == storedOTP)
+            {
+                MarkEmailAsVerifiedInDatabase(model.Email);
+                Console.WriteLine("OTP matched and modified.");
+                return Ok(new
+                {
+                    message = "Email verified successfully.",
+                    code = 200
+                });
+            }
+            Console.WriteLine("Invalid OTP.");
+            return BadRequest(new
+            {
+                message = "Invalid OTP.",
+                code = 400
+            });
+        }
+
+
+        private string GetStoredOTPFromDatabase(string email)
+        {
+            try
+            {
+
+                var user = _context.Users.SingleOrDefault(u => u.Email == email);
+
+                if (user != null && !string.IsNullOrEmpty(user.OTP))
+                {
+                    return user.OTP;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception while retrieving OTP: " + ex.ToString());
+
+                return "An error occurred while retrieving OTP. Please try again later.";
+            }
+
+            return null;
+        }
+
+        [HttpPut("verify-otp")]
+        public void MarkEmailAsVerifiedInDatabase(string email)
+        {
+            try
+            {
+
+                var user = _context.Users.SingleOrDefault(u => u.Email == email);
+
+                if (user != null)
+                {
+                    user.IsVerified = true;
+                    user.OTP = null;
+                    _context.SaveChanges();
+                    Console.WriteLine("Email marked as verified.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An exception occurred while marking email as verified: " + ex.Message);
+            }
+        }
+
+
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] ClientLogin model)
         {
@@ -222,7 +307,7 @@ namespace InvestmentPortal.Controllers
                 {
                     message = "Profile is not complete. Please provide the missing information.",
                     client = client,
-                    code = 202 
+                    code = 202
                 });
             }
             model.FirstName = client.FirstName;
@@ -250,7 +335,7 @@ namespace InvestmentPortal.Controllers
             return BCrypt.Net.BCrypt.Verify(inputPassword, storedPassword);
 
         }
-       
+
 
         [HttpPut("update/{id}")]
 
@@ -271,9 +356,7 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             var client = _context.Client.FirstOrDefault(c => c.ClientId == id);
-
 
 
             if (client == null)
@@ -293,7 +376,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.FirstName))
 
             {
@@ -301,7 +383,6 @@ namespace InvestmentPortal.Controllers
                 client.FirstName = updateModel.FirstName;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.LastName))
@@ -313,7 +394,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.Email))
 
             {
@@ -321,7 +401,6 @@ namespace InvestmentPortal.Controllers
                 client.Email = updateModel.Email;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.Password))
@@ -335,7 +414,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.PhoneNumber))
 
             {
@@ -343,7 +421,6 @@ namespace InvestmentPortal.Controllers
                 client.PhoneNumber = updateModel.PhoneNumber;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.Address))
@@ -355,7 +432,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.City))
 
             {
@@ -363,7 +439,6 @@ namespace InvestmentPortal.Controllers
                 client.City = updateModel.City;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.State))
@@ -375,7 +450,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.PinCode))
 
             {
@@ -383,7 +457,6 @@ namespace InvestmentPortal.Controllers
                 client.PinCode = updateModel.PinCode;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.AccountNumber))
@@ -395,7 +468,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.BankName))
 
             {
@@ -403,7 +475,6 @@ namespace InvestmentPortal.Controllers
                 client.BankName = updateModel.BankName;
 
             }
-
 
 
             if (!string.IsNullOrEmpty(updateModel.IfscCode))
@@ -415,7 +486,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             if (!string.IsNullOrEmpty(updateModel.PanNumber))
 
             {
@@ -425,9 +495,7 @@ namespace InvestmentPortal.Controllers
             }
 
 
-
             _context.SaveChanges();
-
 
 
             return Ok(new
@@ -449,7 +517,6 @@ namespace InvestmentPortal.Controllers
             var client = _context.Client.FirstOrDefault(c => c.ClientId == id);
 
 
-
             if (client == null)
             {
                 return NotFound(new
@@ -458,7 +525,6 @@ namespace InvestmentPortal.Controllers
                     code = 404
                 });
             }
-
 
 
             return Ok(new
