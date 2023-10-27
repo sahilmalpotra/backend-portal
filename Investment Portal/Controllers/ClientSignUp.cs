@@ -570,6 +570,79 @@ namespace InvestmentPortal.Controllers
                 });
             }
         }
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword([FromBody] ForgotPasswordModel model)
+        {
+            var user = _context.Client.FirstOrDefault(u => u.Email == model.Email);
+
+            if (user == null)
+            {
+                return NotFound(new
+                {
+                    message = "User not found.",
+                    code = 404
+                });
+            }
+
+            string otp = GenerateOTP();
+            SaveOTPInDatabase(user.Email, otp);
+            SendOTPEmail(user.Email, otp);
+
+            return Ok(new
+            {
+                message = "Password reset OTP sent to your email.",
+                code = 200
+            });
+        }
+
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.OTP) || string.IsNullOrEmpty(model.NewPassword) || string.IsNullOrEmpty(model.ConfirmPassword))
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid reset password data.",
+                    code = 400
+                });
+            }
+
+            string storedOTP = GetStoredOTPFromDatabase(model.Email);
+            if (model.OTP == storedOTP)
+            {
+                if (model.NewPassword == model.ConfirmPassword)
+                {
+                    var client = _context.Client.FirstOrDefault(a => a.Email == model.Email);
+                    if (client != null)
+                    {
+                        client.Password = HashPassword(model.NewPassword);
+                        // advisor.ConfirmPassword = advisor.Password;
+                        client.ConfirmPassword = model.NewPassword;
+                        _context.SaveChanges();
+                        return Ok(new
+                        {
+                            message = "Password reset successfully.",
+                            code = 200
+                        });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        message = "New password and confirmation password do not match.",
+                        code = 400
+                    });
+                }
+            }
+
+            return BadRequest(new
+            {
+                message = "Invalid OTP.",
+                code = 400
+            });
+        }
 
     }
 }

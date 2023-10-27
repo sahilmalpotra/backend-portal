@@ -45,7 +45,7 @@ namespace InvestmentPortal.Controllers
             {
                 // Calculate the remaining amount
                 decimal sumOfPreviousStrategies = _context.Strategy
-                    .Where(s => s.InvestmentId == strategy.InvestmentId)
+                    .Where(s => s.InvestmentId == strategy.InvestmentId && s.Status != "Rejected")
                     .Sum(s => s.InvestmentAmount);
 
                 Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == strategy.InvestmentId);
