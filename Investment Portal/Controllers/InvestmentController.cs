@@ -11,6 +11,10 @@ using System.Net.Mail;
 using System.Net;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
+using MailKit.Security;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Investment_Portal.Controllers
 {
@@ -87,6 +91,29 @@ namespace Investment_Portal.Controllers
 
                 var createdInvestment = _context.Investments.Add(newInvestment);
                 _context.SaveChanges();
+
+                var clientEmail = _context.Client
+              .Where(a => a.ClientId == newInvestment.ClientId)
+              .Select(a => a.Email)
+              .FirstOrDefault();
+
+                var clientName = _context.Client
+               .Where(a => a.ClientId == newInvestment.ClientId)
+               .Select(a => a.FirstName)
+               .FirstOrDefault();
+
+                string clientSubject = "Your Investment Has Been Made";
+                string clientmsg = "Dear,\r\n\r\nYour investment is in! Now, sit back and relax while our advisors create tailored strategies to optimize your portfolio.\r\n\r\nFor any questions or assistance, our support team is here.\r\n\r\nBest regards,";
+                SendEmail(clientEmail, clientmsg, clientSubject);
+
+                var advisorEmail = _context.Advisor
+                .Where(a => a.AdvisorId == newInvestment.AdvisorId)
+                .Select(a => a.Email)
+                .FirstOrDefault();
+
+                string advisorSubject = "New Investment Available";
+                string advisormsg = "Dear ,\r\n\r\nA new investment opportunity has been added by " + clientName + " with Id " + newInvestment.ClientId + ". Please log in to review and provide your insights and strategy for this opportunity.\r\n\r\nYour expertise is highly valued, and your advice can help our investors make informed decisions.\r\n\r\nBest regards,";
+                SendEmail(advisorEmail, advisormsg, advisorSubject);
 
                 return Ok(new
                 {
@@ -221,6 +248,26 @@ namespace Investment_Portal.Controllers
             }
         }
 
+        [HttpPost("send-email")]
+        public void SendEmail(string email, string msg, string subject)
+        {
+            using var smtp = new SmtpClient();
 
+            var mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
+            mimeMessage.To.Add(MailboxAddress.Parse(email));
+            mimeMessage.Subject = subject;
+            mimeMessage.Body = new TextPart(TextFormat.Html)
+            {
+                Text = msg
+            };
+
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
+
+            smtp.Send(mimeMessage);
+            smtp.Disconnect(true);
+            Console.WriteLine("OTP email sent.");
+        }
     }
 }

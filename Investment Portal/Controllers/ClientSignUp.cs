@@ -25,7 +25,9 @@ namespace InvestmentPortal.Controllers
     {
 
         private readonly AppDbContext _context;
+       
         public object JsonRequestBehavior { get; private set; }
+       
         public ClientSignUp(AppDbContext context)
         {
             _context = context;
@@ -106,9 +108,6 @@ namespace InvestmentPortal.Controllers
                     code = 500
                 });
             }
-
-
-
         }
 
         private string GenerateCustomClientId()
@@ -137,7 +136,6 @@ namespace InvestmentPortal.Controllers
                 }
 
                 else
-
                 {
 
                     uniqueNumber++;
@@ -216,6 +214,11 @@ namespace InvestmentPortal.Controllers
             {
                 MarkEmailAsVerifiedInDatabase(model.Email);
                 Console.WriteLine("OTP matched and modified.");
+
+                string subject = "Welcome Email";
+                string msg = "Dear ,\r\n\r\nWe are excited to welcome you to INCvest, your new destination for smart investing.\r\n\r\nCongratulations on successfully signing up and becoming a part of our growing community of investors. Your journey towards financial growth and success begins now, and we're here to support you every step of the way.\r\n\r\nHere are a few initial steps to help you get started:\r\n\r\nSet your goals: Define your investment objectives and start planning for your financial future.\r\n\r\nExplore opportunities: Discover various investment options and research potential advisors to guide you.\r\n\r\nConnect with the community: Join discussions, ask questions, and engage with other investors and advisors.\r\n\r\nShould you have any questions or need assistance, our dedicated support team is here to assist you.\r\n\r\n Once again, congratulations on choosing INCvest as your investment partner. We look forward to being a part of your financial journey and helping you reach your goals.\r\n\r\nBest regards,";
+                SendEmail(model.Email, msg, subject);
+
                 return Ok(new
                 {
                     message = "Email verified successfully.",
@@ -310,13 +313,27 @@ namespace InvestmentPortal.Controllers
                     code = 202
                 });
             }
-            model.FirstName = client.FirstName;
-            return Ok(new
+            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+            if (user != null && user.IsVerified)
             {
-                message = "Login successful!",
-                client = client,
-                code = 200
-            });
+                model.FirstName = client.FirstName;
+
+                return Ok(new
+                {
+                    message = "Login successful!",
+                    client = client,
+                    code = 200
+                });
+            }
+            else
+            {
+                return Unauthorized(new
+                {
+                    message = "User is not verified.",
+                    code = 401
+                });
+            }
         }
 
 
@@ -340,7 +357,6 @@ namespace InvestmentPortal.Controllers
         [HttpPut("update/{id}")]
 
         public IActionResult UpdateClient(string id, [FromBody] ClientUpdateModel updateModel)
-
         {
 
             if (updateModel == null)
@@ -642,6 +658,28 @@ namespace InvestmentPortal.Controllers
                 message = "Invalid OTP.",
                 code = 400
             });
+        }
+
+        [HttpPost("send-email")]
+        public void SendEmail(string email, string msg, string subject)
+        {
+            using var smtp = new SmtpClient();
+
+            var mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
+            mimeMessage.To.Add(MailboxAddress.Parse(email));
+            mimeMessage.Subject = subject;
+            mimeMessage.Body = new TextPart(TextFormat.Html)
+            {
+                Text = msg
+            };
+
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
+
+            smtp.Send(mimeMessage);
+            smtp.Disconnect(true);
+            Console.WriteLine("OTP email sent.");
         }
 
     }

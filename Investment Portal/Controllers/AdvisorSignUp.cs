@@ -190,6 +190,11 @@ namespace InvestmentPortal.Controllers
             {
                 MarkEmailAsVerifiedInDatabase(model.Email);
                 Console.WriteLine("OTP matched and modified.");
+
+                string subject = "Welcome Email";
+                string msg = "Dear,\r\n\r\n We are thrilled to welcome you to INCvest, your gateway to a world of investment opportunities.\r\n\r\nCongratulations on completing your registration and becoming a part of our community of financial experts. As an advisor, you play a crucial role in helping our investors achieve their financial goals. Your expertise and guidance will make a significant impact, and we're excited to have you on board.\r\n\r\nHere are a few next steps to get started:\r\n\r\nComplete your profile: Make sure your profile is complete and up to date so that potential clients can find you easily.\r\n\r\nExplore opportunities: Browse through the available investment options and stay updated on the latest trends in the financial world.\r\n\r\nEngage with the community: Join discussions, share your insights, and connect with fellow advisors and investors.\r\n\r\nIf you have any questions or need assistance, our support team is here to help you every step of the way.\r\n\r\nOnce again, congratulations on becoming a part of INCvest. We look forward to your success and the value you'll bring to our platform.\r\n\r\nBest regards,";
+                SendEmail(model.Email, msg, subject);
+
                 return Ok(new
                 {
                     message = "Email verified successfully.",
@@ -272,15 +277,29 @@ namespace InvestmentPortal.Controllers
                     code = 401
                 });
             }
-            model.FirstName = advisor.FirstName;
-            return Ok(new
-            {
-                message = "Login successful!",
-                advisor = advisor,
-                code = 200
-            });
-        }
+            
+            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
 
+            if (user != null && user.IsVerified)
+            {
+                model.FirstName = advisor.FirstName;
+
+                return Ok(new
+                {
+                    message = "Login successful!",
+                    advisor = advisor,
+                    code = 200
+                });
+            }
+            else
+            {
+                return Unauthorized(new
+                {
+                    message = "User is not verified.",
+                    code = 401
+                });
+            }
+        }
 
         private string HashPassword(string password)
         {
@@ -551,6 +570,28 @@ namespace InvestmentPortal.Controllers
                 message = "Invalid OTP.",
                 code = 400
             });
+        }
+
+        [HttpPost("send-email")]
+        public void SendEmail(string email, string msg, string subject)
+        {
+            using var smtp = new SmtpClient();
+
+            var mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
+            mimeMessage.To.Add(MailboxAddress.Parse(email));
+            mimeMessage.Subject = subject;
+            mimeMessage.Body = new TextPart(TextFormat.Html)
+            {
+                Text = msg
+            };
+
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
+
+            smtp.Send(mimeMessage);
+            smtp.Disconnect(true);
+            Console.WriteLine("OTP email sent.");
         }
     }
 }

@@ -4,6 +4,10 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using System.Security.Claims;
 using Infrastructure.Data;
+using MailKit.Security;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 
 
@@ -82,6 +86,16 @@ namespace InvestmentPortal.Controllers
                 string customId = GenerateCustomStrategyId();
                 strategy.StrategyId = customId;
                 var addedStrategyId = await _strategyService.AddStrategyAsync(strategy);
+
+
+                var clientEmail = _context.Client
+                .Where(a => a.ClientId == strategy.ClientId)
+                .Select(a => a.Email)
+                .FirstOrDefault();
+
+                string clientSubject = "New Strategy Proposed for Your Investment";
+                string clientmsg = "Dear,\r\n\r\nExciting news! One of our expert advisors has just proposed a new strategy for your investment on INCvest.\r\n\r\nYou can now log in to your account to review the details of this strategy and make an informed decision about your investment. Your financial journey is one step closer to success.\r\n\r\nIf you have any questions or need further guidance, please don't hesitate to reach out to our support team. We're here to assist you every step of the way.\r\n\r\nThank you for choosing INCvest for your investments. We look forward to your continued success.\r\n\r\nBest regards,";
+                SendEmail(clientEmail, clientmsg, clientSubject);
 
                 return Ok(new
                 {
@@ -461,7 +475,24 @@ namespace InvestmentPortal.Controllers
 
                 await _strategyService.UpdateStrategyAsync(strategy);
 
+                var advisorEmail = _context.Advisor
+             .Where(a => a.AdvisorId == strategy.AdvisorId)
+             .Select(a => a.Email)
+             .FirstOrDefault();
 
+                if (strategy.Status == "Approved")
+                {
+                    string subject = "Strategy Approved by Investor";
+                    string advisormsg = "Dear,\r\n\r\nGreat news! We're pleased to inform you that your strategy has been approved by investor with ID " + strategy.ClientId + " on INCvest. Your expertise and guidance have made a real impact.\r\n\r\nThis successful approval is a testament to your valuable insights and the trust our clients have in your expertise. Keep up the excellent work!\r\n\r\nIf you have any questions or need further assistance, feel free to reach out to our support team.\r\n\r\nThank you for your contributions to INCvest. We look forward to your continued success.\r\n\r\nBest regards,";
+                    SendEmail(advisorEmail, advisormsg, subject);
+                }
+
+                if (strategy.Status == "Rejected")
+                {
+                    string subject = " Strategy Rejected by Investor";
+                    string advisormsg = "Dear,\r\n\r\nWe regret to inform you that the strategy you proposed for an investment on INCvest has been rejected by the investor with ID " + strategy.ClientId + ". While this particular strategy may not have been accepted, we encourage you to view this as an opportunity to refine and create a new strategy.\r\n\r\nYour expertise is highly valued, and we believe that your next proposal could be the key to success for our clients. Keep up the great work, and we look forward to seeing your new strategy soon.\r\n\r\nIf you have any questions or need further assistance, please don't hesitate to reach out to our support team.\r\n\r\nThank you for your dedication to INCvest. Your contributions are invaluable, and we're here to support you in assisting our clients.\r\n\r\nBest regards,";
+                    SendEmail(advisorEmail, advisormsg, subject);
+                }
 
                 return Ok(new
                 {
@@ -479,6 +510,28 @@ namespace InvestmentPortal.Controllers
                     code = 500
                 });
             }
+        }
+
+        [HttpPost("send-email")]
+        public void SendEmail(string email, string msg, string subject)
+        {
+            using var smtp = new SmtpClient();
+
+            var mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
+            mimeMessage.To.Add(MailboxAddress.Parse(email));
+            mimeMessage.Subject = subject;
+            mimeMessage.Body = new TextPart(TextFormat.Html)
+            {
+                Text = msg
+            };
+
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
+
+            smtp.Send(mimeMessage);
+            smtp.Disconnect(true);
+            Console.WriteLine("OTP email sent.");
         }
     }
 }
