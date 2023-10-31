@@ -179,16 +179,22 @@ namespace InvestmentPortal.Controllers
             using var smtp = new SmtpClient();
 
             var mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(MailboxAddress.Parse("priyaagg29@gmail.com"));
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
             mimeMessage.To.Add(MailboxAddress.Parse(email));
             mimeMessage.Subject = "Email Verification OTP";
             mimeMessage.Body = new TextPart(TextFormat.Html)
             {
-                Text = $"<h1>Your OTP is: {otp}</h1>"
+                Text = "Dear,\r\n\r\n" +
+                   "Here is your One-Time Password (OTP) to access your account:\r\n\r\n" +
+                   "OTP: " + otp + "\r\n\r\n" +
+                   "Please use this OTP to verify your identity and access your account. For your security, do not share this OTP with anyone.\r\n\r\n" +
+                   "If you did not request this OTP or have any concerns about your account's security, please contact our support team immediately.\r\n\r\n" +
+                   "Best regards\r\n\r\n" +
+                   "IncVest"
             };
 
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("priyaagg29@gmail.com", "damz zbnq cvrf iydn");
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
 
             smtp.Send(mimeMessage);
             smtp.Disconnect(true);
@@ -216,7 +222,17 @@ namespace InvestmentPortal.Controllers
                 Console.WriteLine("OTP matched and modified.");
 
                 string subject = "Welcome Email";
-                string msg = "Dear ,\r\n\r\nWe are excited to welcome you to INCvest, your new destination for smart investing.\r\n\r\nCongratulations on successfully signing up and becoming a part of our growing community of investors. Your journey towards financial growth and success begins now, and we're here to support you every step of the way.\r\n\r\nHere are a few initial steps to help you get started:\r\n\r\nSet your goals: Define your investment objectives and start planning for your financial future.\r\n\r\nExplore opportunities: Discover various investment options and research potential advisors to guide you.\r\n\r\nConnect with the community: Join discussions, ask questions, and engage with other investors and advisors.\r\n\r\nShould you have any questions or need assistance, our dedicated support team is here to assist you.\r\n\r\n Once again, congratulations on choosing INCvest as your investment partner. We look forward to being a part of your financial journey and helping you reach your goals.\r\n\r\nBest regards,";
+                string msg = "Dear ,\r\n\r\n" +
+                  "We are excited to welcome you to INCvest, your new destination for smart investing.\r\n\r\n" +
+                  "Congratulations on successfully signing up and becoming a part of our growing community of investors. Your journey towards financial growth and success begins now, and we're here to support you every step of the way.\r\n\r\n" +
+                  "Here are a few initial steps to help you get started:\r\n\r\n" +
+                  "Set your goals: Define your investment objectives and start planning for your financial future.\r\n\r\n" +
+                  "Explore opportunities: Discover various investment options and research potential advisors to guide you.\r\n\r\n" +
+                  "Connect with the community: Join discussions, ask questions, and engage with other investors and advisors.\r\n\r\n" +
+                  "Should you have any questions or need assistance, our dedicated support team is here to assist you.\r\n\r\n" +
+                  "Once again, congratulations on choosing INCvest as your investment partner. We look forward to being a part of your financial journey and helping you reach your goals.\r\n\r\n" +
+                  "Best regards\r\n\r\n" +
+                  "INCvest";
                 SendEmail(model.Email, msg, subject);
 
                 return Ok(new

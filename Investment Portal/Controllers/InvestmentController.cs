@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using BCrypt.Net;
-using System.Net.Mail;
 using System.Net;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Cors;
@@ -103,7 +102,11 @@ namespace Investment_Portal.Controllers
                .FirstOrDefault();
 
                 string clientSubject = "Your Investment Has Been Made";
-                string clientmsg = "Dear,\r\n\r\nYour investment is in! Now, sit back and relax while our advisors create tailored strategies to optimize your portfolio.\r\n\r\nFor any questions or assistance, our support team is here.\r\n\r\nBest regards,";
+                string clientmsg = "Dear,\r\n\r\n" +
+                   "Your investment is in! Now, sit back and relax while our advisors create tailored strategies to optimize your portfolio.\r\n\r\n" +
+                   "For any questions or assistance, our support team is here.\r\n\r\n" +
+                   "Best regards\r\n\r\n" +
+                   "INCvest";
                 SendEmail(clientEmail, clientmsg, clientSubject);
 
                 var advisorEmail = _context.Advisor
@@ -112,7 +115,11 @@ namespace Investment_Portal.Controllers
                 .FirstOrDefault();
 
                 string advisorSubject = "New Investment Available";
-                string advisormsg = "Dear ,\r\n\r\nA new investment opportunity has been added by " + clientName + " with Id " + newInvestment.ClientId + ". Please log in to review and provide your insights and strategy for this opportunity.\r\n\r\nYour expertise is highly valued, and your advice can help our investors make informed decisions.\r\n\r\nBest regards,";
+                string advisormsg = "Dear,\r\n\r\n" +
+                    "A new investment opportunity has been added by " + clientName + " with ID " + newInvestment.ClientId + ". Please log in to review and provide your insights and strategy for this opportunity.\r\n\r\n" +
+                    "Your expertise is highly valued, and your advice can help our investors make informed decisions.\r\n\r\n" +
+                    "Best regards\r\n\r\n" +
+                    "INCvest";
                 SendEmail(advisorEmail, advisormsg, advisorSubject);
 
                 return Ok(new

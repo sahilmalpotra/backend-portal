@@ -12,6 +12,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
+using Org.BouncyCastle.Crypto.Macs;
 
 namespace InvestmentPortal.Controllers
 {
@@ -155,16 +156,22 @@ namespace InvestmentPortal.Controllers
             using var smtp = new SmtpClient();
 
             var mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(MailboxAddress.Parse("priyaagg29@gmail.com"));
+            mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
             mimeMessage.To.Add(MailboxAddress.Parse(email));
             mimeMessage.Subject = "Email Verification OTP";
             mimeMessage.Body = new TextPart(TextFormat.Html)
             {
-                Text = $"<h1>Your OTP is: {otp}</h1>"
+                Text = "Dear,\r\n\r\n" +
+                   "Here is your One-Time Password (OTP) to access your account:\r\n\r\n" +
+                   "OTP: " + otp + "\r\n\r\n" +
+                   "Please use this OTP to verify your identity and access your account. For your security, do not share this OTP with anyone.\r\n\r\n" +
+                   "If you did not request this OTP or have any concerns about your account's security, please contact our support team immediately.\r\n\r\n" +
+                   "Best regards\r\n\r\n" +
+                   "IncVest"
             };
 
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("priyaagg29@gmail.com", "damz zbnq cvrf iydn");
+            smtp.Authenticate("hello.incvest@gmail.com", "lowl auye dojt fjwk");
 
             smtp.Send(mimeMessage);
             smtp.Disconnect(true);
@@ -192,7 +199,17 @@ namespace InvestmentPortal.Controllers
                 Console.WriteLine("OTP matched and modified.");
 
                 string subject = "Welcome Email";
-                string msg = "Dear,\r\n\r\n We are thrilled to welcome you to INCvest, your gateway to a world of investment opportunities.\r\n\r\nCongratulations on completing your registration and becoming a part of our community of financial experts. As an advisor, you play a crucial role in helping our investors achieve their financial goals. Your expertise and guidance will make a significant impact, and we're excited to have you on board.\r\n\r\nHere are a few next steps to get started:\r\n\r\nComplete your profile: Make sure your profile is complete and up to date so that potential clients can find you easily.\r\n\r\nExplore opportunities: Browse through the available investment options and stay updated on the latest trends in the financial world.\r\n\r\nEngage with the community: Join discussions, share your insights, and connect with fellow advisors and investors.\r\n\r\nIf you have any questions or need assistance, our support team is here to help you every step of the way.\r\n\r\nOnce again, congratulations on becoming a part of INCvest. We look forward to your success and the value you'll bring to our platform.\r\n\r\nBest regards,";
+                string msg = "Dear,\r\n\r\n" +
+                  "We are thrilled to welcome you to INCvest, your gateway to a world of investment opportunities.\r\n\r\n" +
+                  "Congratulations on completing your registration and becoming a part of our community of financial experts. As an advisor, you play a crucial role in helping our investors achieve their financial goals. Your expertise and guidance will make a significant impact, and we're excited to have you on board.\r\n\r\n" +
+                  "Here are a few next steps to get started:\r\n\r\n" +
+                  "Complete your profile: Make sure your profile is complete and up to date so that potential clients can find you easily.\r\n\r\n" +
+                  "Explore opportunities: Browse through the available investment options and stay updated on the latest trends in the financial world.\r\n\r\n" +
+                  "Engage with the community: Join discussions, share your insights, and connect with fellow advisors and investors.\r\n\r\n" +
+                  "If you have any questions or need assistance, our support team is here to help you every step of the way.\r\n\r\n" +
+                  "Once again, congratulations on becoming a part of INCvest. We look forward to your success and the value you'll bring to our platform.\r\n\r\n" +
+                  "Best regards\r\n\r\n" +
+                  "INCvest";
                 SendEmail(model.Email, msg, subject);
 
                 return Ok(new
