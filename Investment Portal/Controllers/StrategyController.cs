@@ -63,6 +63,9 @@ namespace InvestmentPortal.Controllers
                     });
                 }
 
+                strategy.ClientId = investment.ClientId;
+                strategy.AdvisorId = investment.AdvisorId;
+
                 if (strategy.InvestmentAmount > investment.InvestmentAmount)
                 {
                     return BadRequest(new
