@@ -77,6 +77,7 @@ namespace InvestmentPortal.Controllers
 
 
                 decimal remainingAmount = investment.InvestmentAmount - sumOfPreviousStrategies;
+                investment.RemainingAmount = investment.RemainingAmount - strategy.InvestmentAmount;
 
                 if (strategy.InvestmentAmount > remainingAmount)
                 {
@@ -461,6 +462,7 @@ namespace InvestmentPortal.Controllers
 
 
             var strategy = await _strategyService.GetStrategyByStrategyIdAsync(strategyId);
+            Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == strategy.InvestmentId);
 
 
 
@@ -503,7 +505,8 @@ namespace InvestmentPortal.Controllers
                 }
 
                 if (strategy.Status == "Rejected")
-                {
+                { investment.RemainingAmount = investment.RemainingAmount + strategy.InvestmentAmount;
+                  _context.SaveChanges();
                     string subject = " Strategy Rejected by Investor";
                     string advisormsg = "Dear,\r\n\r\n" +
                                       "We regret to inform you that the strategy you proposed for an investment on INCvest has been rejected by the investor with ID " + strategy.ClientId + ". While this particular strategy may not have been accepted, we encourage you to view this as an opportunity to refine and create a new strategy.\r\n\r\n" +

@@ -87,6 +87,7 @@ namespace Investment_Portal.Controllers
 
                 string customId = GenerateCustomInvestmentId();
                 newInvestment.InvestmentID = customId;
+                newInvestment.RemainingAmount = model.InvestmentAmount;
 
                 var createdInvestment = _context.Investments.Add(newInvestment);
                 _context.SaveChanges();

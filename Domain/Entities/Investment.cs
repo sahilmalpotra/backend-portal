@@ -15,6 +15,7 @@ namespace Domain.Entities
         public string ClientId { get; set; }
         public string AdvisorId { get; set; }
         public decimal InvestmentAmount { get; set; }
+        public decimal RemainingAmount { get; set; }
         public string InvestmentType { get; set; }
         public string TimePeriod { get; set; }
         public DateTime CreatedDate { get; set; }
