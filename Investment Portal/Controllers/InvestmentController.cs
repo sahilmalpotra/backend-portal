@@ -185,7 +185,7 @@ namespace Investment_Portal.Controllers
         {
             try
             {
-                var investments = _context.Investments.Where(i => i.AdvisorId == advisorId).ToList();
+                var investments = _context.Investments.Where(i => i.AdvisorId == advisorId && i.RemainingAmount > 0).ToList();
 
                 if (investments == null || investments.Count() == 0)
                 {
