@@ -69,7 +69,7 @@ namespace Infrastructure.Repositories
 
         public IEnumerable<Investment> GetInvestmentsByAdvisorId(string advisorId)
         {
-            return _investments.Where(i => i.AdvisorId == advisorId);
+            return _investments.Where(i => i.AdvisorId == advisorId  && i.RemainingAmount > 0);
         }
 
         public IEnumerable<Investment> GetAllInvestments()
