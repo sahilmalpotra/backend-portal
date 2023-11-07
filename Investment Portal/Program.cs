@@ -21,6 +21,7 @@ builder.Services.AddTransient<IClient, ClientRepo>();
 builder.Services.AddTransient<IAdvisor, AdvisorRepo>();
 builder.Services.AddTransient<IInvestment, InvestmentRepo>();
 builder.Services.AddTransient<IStrategy, StrategyRepo>();
+builder.Services.AddTransient<IStrategies, StrategiesRepository>();
 
 //builder.Services.AddTransient<InvestmentRepo, InvestmentRepo>();
 
