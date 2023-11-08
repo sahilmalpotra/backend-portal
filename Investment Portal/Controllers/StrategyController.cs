@@ -79,6 +79,7 @@ namespace InvestmentPortal.Controllers
                 decimal remainingAmount = investment.InvestmentAmount - sumOfPreviousStrategies;
                 investment.RemainingAmount = investment.RemainingAmount - strategy.InvestmentAmount;
                 investment.Status = "In Progess";
+                _context.SaveChanges();
 
                 if (strategy.InvestmentAmount > remainingAmount)
                 {
