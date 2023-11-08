@@ -12,6 +12,7 @@ namespace Domain.Interfaces
         IEnumerable<Strategies> GetStrategiesByName(string strategyName);
         IEnumerable<Strategies> GetStrategiesByType(string strategyType);
         void AddStrategy(Strategies strategy);
+        IEnumerable<Strategies> GetAllStrategies();
 
     }
 }

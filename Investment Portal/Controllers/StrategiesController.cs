@@ -30,13 +30,21 @@ namespace Investment_Portal.Controllers
         [HttpGet("bytype/{strategyType}")]
         public IActionResult GetStrategiesByType(string strategyType)
         {
-            var strategies = _strategyRepository.GetStrategiesByType(strategyType);
-            if (strategies == null)
+            if (strategyType.Equals("Need Consultation", StringComparison.OrdinalIgnoreCase))
             {
-                return NotFound();
+                var strategies = _strategyRepository.GetAllStrategies();
+                return Ok(strategies);
             }
+            else
+            {
+                var strategies = _strategyRepository.GetStrategiesByType(strategyType);
+                if (strategies == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(strategies);
+                return Ok(strategies);
+            }
         }
 
         [HttpPost]

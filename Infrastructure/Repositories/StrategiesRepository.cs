@@ -28,6 +28,11 @@ namespace Infrastructure.Repositories
             return _context.Strategies.Where(s => s.StrategyType == strategyType).ToList();
         }
 
+        public IEnumerable<Strategies> GetAllStrategies()
+        {
+            return _context.Strategies.ToList();
+        }
+
         public void AddStrategy(Strategies strategy)
         {
             _context.Strategies.Add(strategy);
