@@ -54,7 +54,7 @@ namespace InvestmentPortal.Controllers
             try
             {
 
-                if (await _context.Client.AnyAsync(u => u.Email == client.Email))
+                if (await _context.Client.AnyAsync(u => u.Email == client.Email) || await _context.Advisor.AnyAsync(u => u.Email == client.Email))
                 {
 
                     return StatusCode(409, new

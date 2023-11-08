@@ -50,7 +50,7 @@ namespace InvestmentPortal.Controllers
 
             try
             {
-                if (await _context.Advisor.AnyAsync(u => u.Email == advisor.Email))
+                if (await _context.Advisor.AnyAsync(u => u.Email == advisor.Email) || await _context.Client.AnyAsync(u => u.Email == advisor.Email))
                 {
                     //return StatusCode(409, "Email address is already in use.");
                     return StatusCode(409, new
