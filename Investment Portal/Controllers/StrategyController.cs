@@ -78,6 +78,7 @@ namespace InvestmentPortal.Controllers
 
                 decimal remainingAmount = investment.InvestmentAmount - sumOfPreviousStrategies;
                 investment.RemainingAmount = investment.RemainingAmount - strategy.InvestmentAmount;
+                investment.Status = "In Progess";
 
                 if (strategy.InvestmentAmount > remainingAmount)
                 {
@@ -493,6 +494,11 @@ namespace InvestmentPortal.Controllers
 
                 if (strategy.Status == "Approved")
                 {
+                    if (investment.RemainingAmount == 0)
+                    {
+                        investment.Status = "Investment Approved";
+                    }
+                    _context.SaveChanges();
                     string subject = "Strategy Approved by Investor";
                     string advisormsg = "Dear,\r\n\r\n" +
                    "Great news! We're pleased to inform you that your strategy has been approved by investor with ID " + strategy.ClientId + " on INCvest. Your expertise and guidance have made a real impact.\r\n\r\n" +

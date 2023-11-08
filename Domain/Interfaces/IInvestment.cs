@@ -16,6 +16,6 @@ namespace Domain.Interfaces
         IEnumerable<Investment> GetAllInvestments();
         IEnumerable<Investment> GetInvestmentsByClientId(string clientId);
         IEnumerable<Investment> GetInvestmentsByAdvisorId(string advisorId);
-
+        void InvestmentStatusUpdateByAdvisor(string InvestmentId, string newStatus);
     }
 }

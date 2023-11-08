@@ -27,6 +27,15 @@ namespace Infrastructure.Repositories
             return investment;
         }
 
+        public void InvestmentStatusUpdateByAdvisor(string investmentId, string newStatus)
+        {
+            var existingInvestment = _investments.FirstOrDefault(i => i.InvestmentID == investmentId);
+            if (existingInvestment != null)
+            {
+                existingInvestment.Status = newStatus;
+            }
+        }
+
         public Investment UpdateInvestment(Investment investment)
         {
             if (investment == null)

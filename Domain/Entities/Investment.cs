@@ -17,6 +17,7 @@ namespace Domain.Entities
         public decimal InvestmentAmount { get; set; }
         public decimal RemainingAmount { get; set; }
         public string InvestmentType { get; set; }
+        public string Status { get; set; }
         public string TimePeriod { get; set; }
         public DateTime CreatedDate { get; set; }
 

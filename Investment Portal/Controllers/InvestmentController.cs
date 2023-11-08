@@ -88,6 +88,7 @@ namespace Investment_Portal.Controllers
                 string customId = GenerateCustomInvestmentId();
                 newInvestment.InvestmentID = customId;
                 newInvestment.RemainingAmount = model.InvestmentAmount;
+                newInvestment.Status = "Pending";
 
                 var createdInvestment = _context.Investments.Add(newInvestment);
                 _context.SaveChanges();
@@ -156,6 +157,34 @@ namespace Investment_Portal.Controllers
                 }
             } while (!isUnique);
             return customInvId;
+        }
+
+        [HttpPut("Status-update-ByAdvisor")]
+        public IActionResult InvestmentStatusUpdateByAdvisor(string InvestmentId)
+        {
+            try
+            {
+                var investment = _context.Investments.Find(InvestmentId);
+
+                if (investment == null)
+                {
+                    return NotFound("Investment not found.");
+                }
+
+                investment.Status = "Funded";
+
+                _context.SaveChanges();
+
+                return Ok(new
+                {
+                    message = "Investment status updated to funded.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET api/investments/client/{clientId}
