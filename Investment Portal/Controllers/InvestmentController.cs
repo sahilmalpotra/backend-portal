@@ -104,11 +104,13 @@ namespace Investment_Portal.Controllers
                .FirstOrDefault();
 
                 string clientSubject = "Your Investment Has Been Made";
-                string clientmsg = "Dear,\r\n\r\n" +
-                   "Your investment is in! Now, sit back and relax while our advisors create tailored strategies to optimize your portfolio.\r\n\r\n" +
-                   "For any questions or assistance, our support team is here.\r\n\r\n" +
-                   "Best regards\r\n\r\n" +
-                   "INCvest";
+                string clientmsg = $@"
+                <p>Dear,</p>
+                <p>Your investment is in! Now, sit back and relax while our advisors create tailored strategies to optimize your portfolio.</p>
+                <p>For any questions or assistance, our support team is here.</p>
+                <p>Best regards,</p>
+                <p>INCvest</p>
+                ";
                 SendEmail(clientEmail, clientmsg, clientSubject);
 
                 var advisorEmail = _context.Advisor
@@ -117,11 +119,13 @@ namespace Investment_Portal.Controllers
                 .FirstOrDefault();
 
                 string advisorSubject = "New Investment Available";
-                string advisormsg = "Dear,\r\n\r\n" +
-                    "A new investment opportunity has been added by " + clientName + " with ID " + newInvestment.ClientId + ". Please log in to review and provide your insights and strategy for this opportunity.\r\n\r\n" +
-                    "Your expertise is highly valued, and your advice can help our investors make informed decisions.\r\n\r\n" +
-                    "Best regards\r\n\r\n" +
-                    "INCvest";
+                string advisormsg = $@"
+                <p>Dear,</p>
+                <p>A new investment opportunity has been added by {clientName} with ID {newInvestment.ClientId}. Please log in to review and provide your insights and strategy for this opportunity.</p>
+                <p>Your expertise is highly valued, and your advice can help our investors make informed decisions.</p>
+                <p>Best regards,</p>
+                <p>INCvest</p>
+                ";
                 SendEmail(advisorEmail, advisormsg, advisorSubject);
 
                 return Ok(new
@@ -286,7 +290,7 @@ namespace Investment_Portal.Controllers
         }
 
         [HttpPost("send-email")]
-        public void SendEmail(string email, string msg, string subject)
+        public void SendEmail(string email, string smtpBody, string subject)
         {
             using var smtp = new SmtpClient();
 
@@ -296,7 +300,8 @@ namespace Investment_Portal.Controllers
             mimeMessage.Subject = subject;
             mimeMessage.Body = new TextPart(TextFormat.Html)
             {
-                Text = msg
+                Text = "<html><body>" + smtpBody + "</body></html>"
+
             };
 
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
@@ -304,7 +309,7 @@ namespace Investment_Portal.Controllers
 
             smtp.Send(mimeMessage);
             smtp.Disconnect(true);
-            Console.WriteLine("OTP email sent.");
+            
         }
     }
 }

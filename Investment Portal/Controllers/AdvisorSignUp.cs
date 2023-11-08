@@ -155,19 +155,24 @@ namespace InvestmentPortal.Controllers
         {
             using var smtp = new SmtpClient();
 
+            string smtpBody = $@"
+            <p>Dear,</p>
+            <p>Here is your One-Time Password (OTP) to access your account:</p>
+            <p><strong>OTP: {otp}</strong></p>
+            <p>Please use this OTP to verify your identity and access your account. For your security, do not share this OTP with anyone.</p>
+            <p>If you did not request this OTP or have any concerns about your account's security, please contact our support team immediately.</p>
+            <p>Best regards,</p>
+            <p>IncVest</p>
+            ";
+
             var mimeMessage = new MimeMessage();
             mimeMessage.From.Add(MailboxAddress.Parse("hello.incvest@gmail.com"));
             mimeMessage.To.Add(MailboxAddress.Parse(email));
-            mimeMessage.Subject = "Email Verification OTP";
+            mimeMessage.Subject = "Your One-Time Password (OTP)";
             mimeMessage.Body = new TextPart(TextFormat.Html)
             {
-                Text = "Dear,\r\n\r\n" +
-                   "Here is your One-Time Password (OTP) to access your account:\r\n\r\n" +
-                   "OTP: " + otp + "\r\n\r\n" +
-                   "Please use this OTP to verify your identity and access your account. For your security, do not share this OTP with anyone.\r\n\r\n" +
-                   "If you did not request this OTP or have any concerns about your account's security, please contact our support team immediately.\r\n\r\n" +
-                   "Best regards\r\n\r\n" +
-                   "IncVest"
+                Text = "<html><body>" + smtpBody + "</body></html>"
+
             };
 
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
@@ -199,18 +204,23 @@ namespace InvestmentPortal.Controllers
                 Console.WriteLine("OTP matched and modified.");
 
                 string subject = "Welcome Email";
-                string msg = "Dear,\r\n\r\n" +
-                  "We are thrilled to welcome you to INCvest, your gateway to a world of investment opportunities.\r\n\r\n" +
-                  "Congratulations on completing your registration and becoming a part of our community of financial experts. As an advisor, you play a crucial role in helping our investors achieve their financial goals. Your expertise and guidance will make a significant impact, and we're excited to have you on board.\r\n\r\n" +
-                  "Here are a few next steps to get started:\r\n\r\n" +
-                  "Complete your profile: Make sure your profile is complete and up to date so that potential clients can find you easily.\r\n\r\n" +
-                  "Explore opportunities: Browse through the available investment options and stay updated on the latest trends in the financial world.\r\n\r\n" +
-                  "Engage with the community: Join discussions, share your insights, and connect with fellow advisors and investors.\r\n\r\n" +
-                  "If you have any questions or need assistance, our support team is here to help you every step of the way.\r\n\r\n" +
-                  "Once again, congratulations on becoming a part of INCvest. We look forward to your success and the value you'll bring to our platform.\r\n\r\n" +
-                  "Best regards\r\n\r\n" +
-                  "INCvest";
-                SendEmail(model.Email, msg, subject);
+                string smtpBody = $@"
+                <p>Dear,</p>
+                <p>We are thrilled to welcome you to INCvest, your gateway to a world of investment opportunities.</p>
+                <p>Congratulations on completing your registration and becoming a part of our community of financial experts. As an advisor, you play a crucial role in helping our investors achieve their financial goals. Your expertise and guidance will make a significant impact, and we're excited to have you on board.</p>
+                <p>Here are a few next steps to get started:</p>
+                <ul>
+                     <li>Complete your profile: Make sure your profile is complete and up to date so that potential clients can find you easily.</li>
+                     <li>Explore opportunities: Browse through the available investment options and stay updated on the latest trends in the financial world.</li>
+                     <li>Engage with the community: Join discussions, share your insights, and connect with fellow advisors and investors.</li>
+                </ul>
+                <p>If you have any questions or need assistance, our support team is here to help you every step of the way.</p>
+                <p>Once again, congratulations on becoming a part of INCvest. We look forward to your success and the value you'll bring to our platform.</p>
+                <p>Best regards,</p>
+                <p>IncVest</p>
+                ";
+               
+                SendEmail(model.Email, smtpBody, subject);
 
                 return Ok(new
                 {
@@ -590,7 +600,7 @@ namespace InvestmentPortal.Controllers
         }
 
         [HttpPost("send-email")]
-        public void SendEmail(string email, string msg, string subject)
+        public void SendEmail(string email, string smtpBody, string subject)
         {
             using var smtp = new SmtpClient();
 
@@ -600,7 +610,8 @@ namespace InvestmentPortal.Controllers
             mimeMessage.Subject = subject;
             mimeMessage.Body = new TextPart(TextFormat.Html)
             {
-                Text = msg
+                Text = "<html><body>" + smtpBody + "</body></html>"
+
             };
 
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
@@ -608,7 +619,6 @@ namespace InvestmentPortal.Controllers
 
             smtp.Send(mimeMessage);
             smtp.Disconnect(true);
-            Console.WriteLine("OTP email sent.");
         }
     }
 }
