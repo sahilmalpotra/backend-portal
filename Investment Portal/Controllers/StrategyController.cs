@@ -449,6 +449,93 @@ namespace InvestmentPortal.Controllers
 
 
 
+        [HttpPut("Update-Multiple-by-Client")]
+        public async Task<IActionResult> UpdateMultipleByClient([FromBody] List<StatusUpdateRequest> statusUpdates)
+        {
+            if (statusUpdates == null || !ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid status update request data.",
+                    code = 400
+                });
+            }
+
+            try
+            {
+                foreach (var statusUpdate in statusUpdates)
+                {
+                    var strategy = await _strategyService.GetStrategyByStrategyIdAsync(statusUpdate.StrategyId);
+                    Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == strategy.InvestmentId);
+
+                    if (strategy != null)
+                    {
+                        strategy.Status = statusUpdate.Status;
+                        strategy.Remarks = statusUpdate.Remarks;
+
+                        await _strategyService.UpdateStrategyAsync(strategy);
+
+                        var advisorEmail = _context.Advisor
+                            .Where(a => a.AdvisorId == strategy.AdvisorId)
+                            .Select(a => a.Email)
+                            .FirstOrDefault();
+
+                        if (strategy.Status == "Approved")
+                        {
+                            if (investment.RemainingAmount == 0)
+                            {
+                                investment.Status = "Investment Approved";
+                            }
+                            _context.SaveChanges();
+                            string subject = "Strategy Approved by Investor";
+                            string advisormsg = $@"
+                        <p>Dear,</p>
+                        <p>Great news! We're pleased to inform you that your strategy has been approved by the investor with ID {strategy.ClientId} on INCvest. Your expertise and guidance have made a real impact.</p>
+                        <p>This successful approval is a testament to your valuable insights and the trust our clients have in your expertise. Keep up the excellent work!</p>
+                        <p>If you have any questions or need further assistance, feel free to reach out to our support team.</p>
+                        <p>Thank you for your contributions to INCvest. We look forward to your continued success.</p>
+                        <p>Best regards,</p>
+                        <p>INCvest</p>
+                    ";
+                            SendEmail(advisorEmail, advisormsg, subject);
+                        }
+
+                        if (strategy.Status == "Rejected")
+                        {
+                            investment.RemainingAmount = investment.RemainingAmount + strategy.InvestmentAmount;
+                            _context.SaveChanges();
+                            string subject = " Strategy Rejected by Investor";
+                            string advisormsg = $@"
+                        <p>Dear,</p>
+                        <p>We regret to inform you that the strategy you proposed for an investment on INCvest has been rejected by the investor with ID {strategy.ClientId}. While this particular strategy may not have been accepted, we encourage you to view this as an opportunity to refine and create a new strategy.</p>
+                        <p>Your expertise is highly valued, and we believe that your next proposal could be the key to success for our clients. Keep up the great work, and we look forward to seeing your new strategy soon.</p>
+                        <p>If you have any questions or need further assistance, please don't hesitate to reach out to our support team.</p>
+                        <p>Thank you for your dedication to INCvest. Your contributions are invaluable, and we're here to support you in assisting our clients.</p>
+                        <p>Best regards,</p>
+                        <p>INCvest</p>
+                    ";
+
+                            SendEmail(advisorEmail, advisormsg, subject);
+                        }
+                    }
+                }
+
+                return Ok(new
+                {
+                    message = "Multiple strategies updated successfully.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating multiple strategies.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
 
 
         [HttpPut("{strategyId}/Update-by-Client")]
