@@ -9,6 +9,9 @@ namespace Domain.Entities
 {
     public class StatusUpdateRequest
     {
+
+        public string StrategyId { get; set; }
+
         [Required]
         [RegularExpression("^(Approved|Rejected)$", ErrorMessage = "Status must be either 'Approved' or 'Rejected'.")]
         public string Status { get; set; }
