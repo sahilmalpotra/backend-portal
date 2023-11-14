@@ -110,6 +110,15 @@ namespace Investment_Portal.Controllers
                 <p>For any questions or assistance, our support team is here.</p>
                 <p>Best regards,</p>
                 <p>INCvest</p>
+                <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
                 ";
                 SendEmail(clientEmail, clientmsg, clientSubject);
 
@@ -125,6 +134,15 @@ namespace Investment_Portal.Controllers
                 <p>Your expertise is highly valued, and your advice can help our investors make informed decisions.</p>
                 <p>Best regards,</p>
                 <p>INCvest</p>
+                <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
                 ";
                 SendEmail(advisorEmail, advisormsg, advisorSubject);
 

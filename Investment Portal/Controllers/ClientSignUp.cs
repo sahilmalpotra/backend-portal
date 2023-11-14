@@ -186,6 +186,15 @@ namespace InvestmentPortal.Controllers
             <p>If you did not request this OTP or have any concerns about your account's security, please contact our support team immediately.</p>
             <p>Best regards,</p>
             <p>IncVest</p>
+            <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                <style>
+                    .logo-text {{
+                        color: black;
+                    }}
+                    .dot {{
+                        color: #4b49ac;
+                    }}
+                </style>
             ";
 
             var mimeMessage = new MimeMessage();
@@ -241,6 +250,15 @@ namespace InvestmentPortal.Controllers
                 <p>Once again, congratulations on choosing INCvest as your investment partner. We look forward to being a part of your financial journey and helping you reach your goals.</p>
                 <p>Best regards,</p>
                 <p>INCvest</p>
+                <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
                 ";
 
                 SendEmail(model.Email, smtpBody, subject);

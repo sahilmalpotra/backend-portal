@@ -108,6 +108,15 @@ namespace InvestmentPortal.Controllers
                 <p>Thank you for choosing INCvest for your investments. We look forward to your continued success.</p>
                 <p>Best regards,</p>
                 <p>INCvest</p>
+                <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
                 ";
                 SendEmail(clientEmail, clientmsg, clientSubject);
 
@@ -496,7 +505,16 @@ namespace InvestmentPortal.Controllers
                         <p>Thank you for your contributions to INCvest. We look forward to your continued success.</p>
                         <p>Best regards,</p>
                         <p>INCvest</p>
-                    ";
+                         <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
+                             ";
                             SendEmail(advisorEmail, advisormsg, subject);
                         }
 
@@ -513,7 +531,16 @@ namespace InvestmentPortal.Controllers
                         <p>Thank you for your dedication to INCvest. Your contributions are invaluable, and we're here to support you in assisting our clients.</p>
                         <p>Best regards,</p>
                         <p>INCvest</p>
-                    ";
+                        <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
+                        ";
 
                             SendEmail(advisorEmail, advisormsg, subject);
                         }
@@ -584,10 +611,18 @@ namespace InvestmentPortal.Controllers
 
                 if (strategy.Status == "Approved")
                 {
-                    if (investment.RemainingAmount == 0)
+
+                    bool allStrategiesApproved = _context.Strategy
+                .Where(s => s.InvestmentId == investment.InvestmentID && s.Status != "Approved")
+                .Any();
+
+                    if (!allStrategiesApproved && investment.RemainingAmount == 0)
                     {
                         investment.Status = "Investment Approved";
+                        _context.SaveChanges();
                     }
+
+                 
                     _context.SaveChanges();
                     string subject = "Strategy Approved by Investor";
                     string advisormsg = $@"
@@ -598,6 +633,15 @@ namespace InvestmentPortal.Controllers
                     <p>Thank you for your contributions to INCvest. We look forward to your continued success.</p>
                     <p>Best regards,</p>
                     <p>INCvest</p>
+                    <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
                     ";
                     SendEmail(advisorEmail, advisormsg, subject);
                 }
@@ -614,6 +658,15 @@ namespace InvestmentPortal.Controllers
                     <p>Thank you for your dedication to INCvest. Your contributions are invaluable, and we're here to support you in assisting our clients.</p>
                     <p>Best regards,</p>
                     <p>INCvest</p>
+                    <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
                     ";
 
                     SendEmail(advisorEmail, advisormsg, subject);
