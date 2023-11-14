@@ -491,10 +491,17 @@ namespace InvestmentPortal.Controllers
 
                         if (strategy.Status == "Approved")
                         {
-                            if (investment.RemainingAmount == 0)
+
+                            bool allStrategiesApproved = _context.Strategy
+                                 .Where(s => s.InvestmentId == investment.InvestmentID && s.Status != "Approved")
+                                 .Any();
+
+                            if (!allStrategiesApproved && investment.RemainingAmount == 0)
                             {
                                 investment.Status = "Investment Approved";
+                                _context.SaveChanges();
                             }
+
                             _context.SaveChanges();
                             string subject = "Strategy Approved by Investor";
                             string advisormsg = $@"
@@ -592,8 +599,6 @@ namespace InvestmentPortal.Controllers
                     code = 404
                 });
             }
-
-
 
             try
             {

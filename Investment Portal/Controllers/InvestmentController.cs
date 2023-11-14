@@ -251,6 +251,96 @@ namespace Investment_Portal.Controllers
             }
         }
 
+        // GET api/investments/approved
+        [HttpGet("approved")]
+        public IActionResult GetApprovedInvestments()
+        {
+            try
+            {
+                var approvedInvestments = _context.Investments
+                 .Where(i => i.Status == "Investment Approved")
+                 .OrderByDescending(i => i.CreatedDate)
+                 .ToList();
+
+
+                if (approvedInvestments == null || approvedInvestments.Count() == 0)
+                {
+                    return NotFound("No approved investments found.");
+                }
+
+                return Ok(approvedInvestments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+        // PUT api/investments/update-status
+        [HttpPut("update-status")]
+        public IActionResult UpdateInvestmentsStatus([FromBody] InvestmentUpdateStatusRequest updateStatusRequest)
+        {
+            try
+            {
+                if (updateStatusRequest == null || !ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Invalid update status request data.",
+                        code = 400
+                    });
+                }
+
+                foreach (var updateData in updateStatusRequest.InvestmentUpdates)
+                {
+                    var investment = _context.Investments.Find(updateData.InvestmentId);
+
+                    if (investment == null)
+                    {
+                        return NotFound(new
+                        {
+                            message = $"Investment with ID {updateData.InvestmentId} not found.",
+                            code = 404
+                        });
+                    }
+
+                    // Update the investment status
+                    investment.Status = updateData.Status;
+
+                    // Update the status of associated strategies to 'Funded' if the investment status is 'Funded'
+                    if (updateData.Status == "Funded")
+                    {
+                        var strategies = _context.Strategy.Where(s => s.InvestmentId == updateData.InvestmentId).ToList();
+                        foreach (var strategy in strategies)
+                        {
+                            strategy.Status = "Funded";
+                            _context.Entry(strategy).State = EntityState.Modified;
+                        }
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return Ok(new
+                {
+                    message = "Investment statuses updated successfully.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating investment statuses.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
+
+
 
         // PUT api/investments/{id}
         [HttpPut("{id}")]
