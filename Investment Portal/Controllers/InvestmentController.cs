@@ -251,21 +251,20 @@ namespace Investment_Portal.Controllers
             }
         }
 
-        // GET api/investments/approved
-        [HttpGet("approved")]
-        public IActionResult GetApprovedInvestments()
+        // GET api/investments/approved/{advisorId}
+        [HttpGet("approved/{advisorId}")]
+        public IActionResult GetApprovedInvestments(string advisorId)
         {
             try
             {
                 var approvedInvestments = _context.Investments
-                 .Where(i => i.Status == "Investment Approved")
-                 .OrderByDescending(i => i.CreatedDate)
-                 .ToList();
-
+                    .Where(i => i.Status == "Investment Approved" && i.AdvisorId == advisorId)
+                    .OrderByDescending(i => i.CreatedDate)
+                    .ToList();
 
                 if (approvedInvestments == null || approvedInvestments.Count() == 0)
                 {
-                    return NotFound("No approved investments found.");
+                    return NotFound($"No approved investments found for advisor with ID {advisorId}.");
                 }
 
                 return Ok(approvedInvestments);
@@ -275,7 +274,6 @@ namespace Investment_Portal.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
 
         // PUT api/investments/update-status
@@ -306,13 +304,14 @@ namespace Investment_Portal.Controllers
                         });
                     }
 
-                    // Update the investment status
                     investment.Status = updateData.Status;
 
-                    // Update the status of associated strategies to 'Funded' if the investment status is 'Funded'
                     if (updateData.Status == "Funded")
                     {
-                        var strategies = _context.Strategy.Where(s => s.InvestmentId == updateData.InvestmentId).ToList();
+                        var strategies = _context.Strategy
+                            .Where(s => s.InvestmentId == updateData.InvestmentId && s.Status == "Approved")
+                            .ToList();
+
                         foreach (var strategy in strategies)
                         {
                             strategy.Status = "Funded";
