@@ -481,6 +481,7 @@ namespace InvestmentPortal.Controllers
                     {
                         strategy.Status = statusUpdate.Status;
                         strategy.Remarks = statusUpdate.Remarks;
+                        _context.SaveChanges();
 
                         await _strategyService.UpdateStrategyAsync(strategy);
 
@@ -492,17 +493,16 @@ namespace InvestmentPortal.Controllers
                         if (strategy.Status == "Approved")
                         {
 
-                            bool allStrategiesApproved = _context.Strategy
-                                 .Where(s => s.InvestmentId == investment.InvestmentID && s.Status != "Approved")
-                                 .Any();
+                            bool allStrategiesApprovedOrRejected = _context.Strategy
+                             .Where(s => s.InvestmentId == investment.InvestmentID && s.Status != "Approved" && s.Status != "Rejected")
+                             .Any();
 
-                            if (!allStrategiesApproved && investment.RemainingAmount == 0)
+                            if (!allStrategiesApprovedOrRejected && investment.RemainingAmount == 0)
                             {
                                 investment.Status = "Investment Approved";
                                 _context.SaveChanges();
                             }
 
-                            _context.SaveChanges();
                             string subject = "Strategy Approved by Investor";
                             string advisormsg = $@"
                         <p>Dear,</p>
