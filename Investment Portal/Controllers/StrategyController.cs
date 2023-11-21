@@ -499,8 +499,30 @@ namespace InvestmentPortal.Controllers
 
                             if (!allStrategiesApprovedOrRejected && investment.RemainingAmount == 0)
                             {
+
                                 investment.Status = "Investment Approved";
                                 _context.SaveChanges();
+                                string emailsubject = "Investment Ready for Funding";
+                                string smtpmsg = $@"
+                                    <p>Dear Advisor,</p>
+                                    <p>Exciting news! All the strategies for the investment with ID {investment.InvestmentID} have been successfully approved by the investor. The client is ready to proceed, and the investment is now awaiting funding.</p>
+                                    <p>Your guidance and expertise have played a crucial role in reaching this milestone. We appreciate your valuable contributions to INCvest.</p>
+                                    <p>If you have any further instructions or if there's anything we can assist you with, please feel free to reach out to our support team.</p>
+                                    <p>Thank you for your dedication to the success of our clients. We look forward to the continued success of this investment.</p>
+                                    <p>Best regards,</p>
+                                    <p>INCvest</p>
+                                    <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                                    <style>
+                                        .logo-text {{
+                                            color: black;
+                                        }}
+                                        .dot {{
+                                            color: #4b49ac;
+                                        }}
+                                    </style>
+                                ";
+                                SendEmail(advisorEmail,smtpmsg, emailsubject);
+
                             }
 
                             string subject = "Strategy Approved by Investor";

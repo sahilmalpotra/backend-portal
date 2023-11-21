@@ -215,7 +215,9 @@ namespace Investment_Portal.Controllers
         {
             try
             {
-                var investments = _context.Investments.Where(i => i.ClientId == clientId).ToList();
+                var investments = _context.Investments.Where(i => i.ClientId == clientId)
+                 .OrderByDescending(i => i.CreatedDate)
+                .ToList();
 
                 if (investments == null || investments.Count() == 0)
                 {
@@ -236,7 +238,9 @@ namespace Investment_Portal.Controllers
         {
             try
             {
-                var investments = _context.Investments.Where(i => i.AdvisorId == advisorId && i.RemainingAmount > 0).ToList();
+                var investments = _context.Investments.Where(i => i.AdvisorId == advisorId && i.RemainingAmount > 0)
+                .OrderByDescending(i => i.CreatedDate)
+                .ToList();
 
                 if (investments == null || investments.Count() == 0)
                 {
@@ -277,7 +281,6 @@ namespace Investment_Portal.Controllers
 
 
 
-
         // PUT api/investments/update-status
         [HttpPut("update-status")]
         public IActionResult UpdateInvestmentsStatus([FromBody] List<InvestmentUpdate> updateRequests)
@@ -310,6 +313,7 @@ namespace Investment_Portal.Controllers
 
                     if (updateRequest.Status == "Funded")
                     {
+
                         var strategies = _context.Strategy
                             .Where(s => s.InvestmentId == updateRequest.InvestmentId && s.Status == "Approved")
                             .ToList();
@@ -319,6 +323,55 @@ namespace Investment_Portal.Controllers
                             strategy.Status = "Funded";
                             _context.Entry(strategy).State = EntityState.Modified;
                         }
+
+                        var clientEmail = _context.Client
+                  .Where(a => a.ClientId == investment.ClientId)
+                  .Select(a => a.Email)
+                  .FirstOrDefault();
+
+                        string clientSubject = "Investment Funded";
+                        string clientmsg = $@"
+                    <p>Dear {investment.Client.FirstName},</p>
+                    <p>We're delighted to inform you that your investment with ID {investment.InvestmentID} has been successfully funded. Congratulations on taking this significant step towards your financial goals!</p>
+                    <p>Our team is here to assist you throughout this investment journey. If you have any questions or need further assistance, please don't hesitate to reach out to our support team.</p>
+                    <p>Thank you for choosing INCvest. We wish you continued success in your investment.</p>
+                    <p>Best regards,</p>
+                    <p>INCvest</p>
+                    <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
+                ";
+                        SendEmail(clientEmail, clientmsg, clientSubject);
+
+                        var advisorEmail = _context.Advisor
+                            .Where(a => a.AdvisorId == investment.AdvisorId)
+                            .Select(a => a.Email)
+                            .FirstOrDefault();
+
+                        string advisorSubject = "Investment Funded";
+                        string advisormsg = $@"
+                    <p>Dear {investment.Advisor.FirstName},</p>
+                    <p>The investment with ID {investment.InvestmentID} has been successfully funded. Your guidance and support have contributed to the success of this investment.</p>
+                    <p>If you have any additional insights or recommendations, feel free to share them with the client. Thank you for your valuable contributions to INCvest.</p>
+                    <p>Best regards,</p>
+                    <p>INCvest</p>
+                    <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
+                ";
+                        SendEmail(advisorEmail, advisormsg, advisorSubject);
                     }
                 }
 
