@@ -415,9 +415,8 @@ namespace InvestmentPortal.Controllers
 
             if (!string.IsNullOrEmpty(updateModel.Password))
             {
-                advisor.Password = updateModel.Password;
-                advisor.ConfirmPassword = advisor.Password;
-                advisor.Password = HashPassword(advisor.Password);
+                advisor.ConfirmPassword = updateModel.Password;
+                advisor.Password = HashPassword(updateModel.Password);
             }
 
 
