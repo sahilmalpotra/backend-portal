@@ -53,27 +53,41 @@ namespace Investment_Portal.Controllers
                 {
                     return BadRequest("Client not found.");
                 }
+               
+                HashSet<string> checkedAdvisorIds = new HashSet<string>();
 
-                if (client.AdvisorId == "")
+                while (client.AdvisorId == "")
                 {
                     var lowestClientAdvisor = _context.Advisor
                         .OrderBy(a => a.NumberOfClients)
-                        .FirstOrDefault();
+                        .FirstOrDefault(a => !checkedAdvisorIds.Contains(a.AdvisorId));
 
                     if (lowestClientAdvisor != null)
                     {
-                        lowestClientAdvisor.NumberOfClients++;
-                        _context.Advisor.Update(lowestClientAdvisor);
+                        var advisorUser = _context.Users.FirstOrDefault(u => u.Email == lowestClientAdvisor.Email);
 
-                        client.AdvisorId = lowestClientAdvisor.AdvisorId;
-                        _context.Client.Update(client);
+                        if (advisorUser != null && advisorUser.IsVerified)
+                        {
+                            lowestClientAdvisor.NumberOfClients++;
+                            _context.Advisor.Update(lowestClientAdvisor);
 
+                            client.AdvisorId = lowestClientAdvisor.AdvisorId;
+                            _context.Client.Update(client);
 
-                        _context.SaveChanges();
+                            checkedAdvisorIds.Add(lowestClientAdvisor.AdvisorId);
 
+                            _context.SaveChanges();
+                        }
+                        else
+                        {
+                            checkedAdvisorIds.Add(lowestClientAdvisor.AdvisorId);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest("No verified advisor available for allocation.");
                     }
                 }
-
 
                 var newInvestment = new Investment
                 {
