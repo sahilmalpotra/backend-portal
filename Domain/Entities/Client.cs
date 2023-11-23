@@ -43,7 +43,6 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "Phone number is required.")]
         [Display(Name = "Phone Number")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number.")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Address is required.")]

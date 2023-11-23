@@ -66,6 +66,14 @@ namespace Infrastructure.Repositories
 
             return strategies.OrderBy(s => strategies.IndexOf(s));
         }
+        public async Task<IEnumerable<Strategy>> GetApprovedStrategiesByAdvisorIdAsync(string advisorId)
+        {
+            var approvedStrategies = await _context.Strategy
+                .Where(s => s.AdvisorId == advisorId && s.Status == "Approved")
+                .ToListAsync();
+
+            return approvedStrategies.OrderBy(s => approvedStrategies.IndexOf(s)); 
+        }
 
         public async Task UpdateStrategyAsync(Strategy strategy)
         {

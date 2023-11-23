@@ -15,6 +15,7 @@ namespace Domain.Interfaces
         Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(string clientId);
 
         Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(string advisorId);
+        Task<IEnumerable<Strategy>> GetApprovedStrategiesByAdvisorIdAsync(string advisorId);
         Task<string> AddStrategyAsync(Strategy strategy);
         Task UpdateStrategyAsync(Strategy strategy);
         Task DeleteStrategyAsync(string strategyId);
