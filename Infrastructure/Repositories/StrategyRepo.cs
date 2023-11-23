@@ -37,9 +37,11 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Strategy>> GetStrategiesByInvestmentIdAsync(string investmentId)
         {
-            return await _context.Strategy
-                .Where(s => s.InvestmentId == investmentId)
-                .ToListAsync();
+            var strategies = await _context.Strategy
+            .Where(s => s.InvestmentId == investmentId)
+            .ToListAsync();
+
+            return strategies.OrderBy(s => strategies.IndexOf(s));
         }
         public async Task<Strategy> GetStrategyByStrategyIdAsync(string strategyId)
         {
@@ -49,16 +51,20 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(string clientId)
         {
-            return await _context.Strategy
-                .Where(s => s.ClientId == clientId)
-                .ToListAsync();
+            var strategies = await _context.Strategy
+            .Where(s => s.ClientId == clientId)
+            .ToListAsync();
+
+            return strategies.OrderBy(s => strategies.IndexOf(s));
         }
 
         public async Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(string advisorId)
         {
-            return await _context.Strategy
-                            .Where(s => s.AdvisorId == advisorId)
-                            .ToListAsync();
+            var strategies = await _context.Strategy
+             .Where(s => s.AdvisorId == advisorId)
+             .ToListAsync();
+
+            return strategies.OrderBy(s => strategies.IndexOf(s));
         }
 
         public async Task UpdateStrategyAsync(Strategy strategy)

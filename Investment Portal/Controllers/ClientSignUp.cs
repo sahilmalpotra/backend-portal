@@ -463,16 +463,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-            if (!string.IsNullOrEmpty(updateModel.Password))
-
-            {
-                client.ConfirmPassword = updateModel.Password;
-                client.Password = HashPassword(updateModel.Password);
-                
-
-            }
-
-
             if (!string.IsNullOrEmpty(updateModel.PhoneNumber))
 
             {

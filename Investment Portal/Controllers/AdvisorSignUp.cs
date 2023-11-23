@@ -413,13 +413,6 @@ namespace InvestmentPortal.Controllers
             }
 
 
-            if (!string.IsNullOrEmpty(updateModel.Password))
-            {
-                advisor.ConfirmPassword = updateModel.Password;
-                advisor.Password = HashPassword(updateModel.Password);
-            }
-
-
             if (!string.IsNullOrEmpty(updateModel.PhoneNumber))
             {
                 advisor.PhoneNumber = updateModel.PhoneNumber;
