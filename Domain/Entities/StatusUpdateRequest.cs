@@ -13,7 +13,7 @@ namespace Domain.Entities
         public string StrategyId { get; set; }
 
         [Required]
-        [RegularExpression("^(Approved|Rejected)$", ErrorMessage = "Status must be either 'Approved' or 'Rejected'.")]
+        [RegularExpression("^(Approved|Rejected|Funded)$", ErrorMessage = "Status must be either 'Approved' or 'Rejected' or 'Funded'.")]
         public string Status { get; set; }
 
         [MaxLength(500)]
