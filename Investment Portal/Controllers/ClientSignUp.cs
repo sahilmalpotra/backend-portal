@@ -324,6 +324,63 @@ namespace InvestmentPortal.Controllers
 
 
 
+        //[HttpPost("login")]
+        //public IActionResult Login([FromBody] ClientLogin model)
+        //{
+        //    if (model == null)
+        //    {
+        //        return BadRequest(new
+        //        {
+        //            message = "Invalid login data.",
+        //            code = 400
+        //        });
+        //    }
+
+        //    var client = _context.Client.FirstOrDefault(u => u.Email == model.Email);
+
+        //    if (client == null || !VerifyPassword(model.Password, client.Password))
+        //    {
+        //        return Unauthorized(new
+        //        {
+        //            message = "Invalid email or password.",
+        //            client = client,
+        //            code = 401
+        //        });
+        //    }
+
+        //    if (!client.IsProfileComplete)
+        //    {
+        //        return Ok(new
+        //        {
+        //            message = "Profile is not complete. Please provide the missing information.",
+        //            client = client,
+        //            code = 202
+        //        });
+        //    }
+        //    var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+        //    if (user != null && user.IsVerified)
+        //    {
+        //        model.FirstName = client.FirstName;
+
+        //        return Ok(new
+        //        {
+        //            message = "Login successful!",
+        //            client = client,
+        //            code = 200
+        //        });
+        //    }
+        //    else
+        //    {
+        //        return Unauthorized(new
+        //        {
+        //            message = "User is not verified.",
+        //            code = 401
+        //        });
+        //    }
+        //}
+
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] ClientLogin model)
         {
@@ -338,7 +395,7 @@ namespace InvestmentPortal.Controllers
 
             var client = _context.Client.FirstOrDefault(u => u.Email == model.Email);
 
-            if (client == null || !VerifyPassword(model.Password, client.Password))
+            if (client == null)
             {
                 return Unauthorized(new
                 {
@@ -348,20 +405,32 @@ namespace InvestmentPortal.Controllers
                 });
             }
 
-            if (!client.IsProfileComplete)
-            {
-                return Ok(new
-                {
-                    message = "Profile is not complete. Please provide the missing information.",
-                    client = client,
-                    code = 202
-                });
-            }
             var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
 
-            if (user != null && user.IsVerified)
+            if (user != null)
             {
-                model.FirstName = client.FirstName;
+                if (!user.IsVerified)
+                {
+                    string newOtp = GenerateOTP();
+                    SaveOTPInDatabase(model.Email, newOtp);
+                    SendOTPEmail(model.Email, newOtp);
+
+                    return BadRequest(new
+                    {
+                        message = "Account not verified. A new OTP has been sent to your email. Please provide the OTP to complete the verification.",
+                        code = 401
+                    });
+                }
+
+                if (!VerifyPassword(model.Password, client.Password))
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Invalid email or password.",
+                        client = client,
+                        code = 401
+                    });
+                }
 
                 return Ok(new
                 {
@@ -374,7 +443,7 @@ namespace InvestmentPortal.Controllers
             {
                 return Unauthorized(new
                 {
-                    message = "User is not verified.",
+                    message = "User is not registered.",
                     code = 401
                 });
             }

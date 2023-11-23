@@ -300,6 +300,52 @@ namespace InvestmentPortal.Controllers
         }
 
 
+        //[HttpPost("login")]
+        //public IActionResult Login([FromBody] AdvisorLogin model)
+        //{
+        //    if (model == null)
+        //    {
+        //        return BadRequest(new
+        //        {
+        //            message = "Invalid login data.",
+        //            code = 400
+        //        });
+        //    }
+
+        //    var advisor = _context.Advisor.FirstOrDefault(u => u.Email == model.Email);
+
+        //    if (advisor == null || !VerifyPassword(model.Password, advisor.Password))
+        //    {
+        //        return Unauthorized(new
+        //        {
+        //            message = "Invalid email or password.",
+        //            code = 401
+        //        });
+        //    }
+
+        //    var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+        //    if (user != null && user.IsVerified)
+        //    {
+        //        model.FirstName = advisor.FirstName;
+
+        //        return Ok(new
+        //        {
+        //            message = "Login successful!",
+        //            advisor = advisor,
+        //            code = 200
+        //        });
+        //    }
+        //    else
+        //    {
+        //        return Unauthorized(new
+        //        {
+        //            message = "User is not verified.",
+        //            code = 401
+        //        });
+        //    }
+        //}
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] AdvisorLogin model)
         {
@@ -314,7 +360,7 @@ namespace InvestmentPortal.Controllers
 
             var advisor = _context.Advisor.FirstOrDefault(u => u.Email == model.Email);
 
-            if (advisor == null || !VerifyPassword(model.Password, advisor.Password))
+            if (advisor == null)
             {
                 return Unauthorized(new
                 {
@@ -322,12 +368,32 @@ namespace InvestmentPortal.Controllers
                     code = 401
                 });
             }
-            
+
             var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
 
-            if (user != null && user.IsVerified)
+            if (user != null)
             {
-                model.FirstName = advisor.FirstName;
+                if (!user.IsVerified)
+                {
+                    string newOtp = GenerateOTP();
+                    SaveOTPInDatabase(model.Email, newOtp);
+                    SendOTPEmail(model.Email, newOtp);
+
+                    return BadRequest(new
+                    {
+                        message = "Account not verified. A new OTP has been sent to your email. Please provide the OTP to complete the verification.",
+                        code = 401
+                    });
+                }
+
+                if (!VerifyPassword(model.Password, advisor.Password))
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Invalid email or password.",
+                        code = 401
+                    });
+                }
 
                 return Ok(new
                 {
@@ -340,11 +406,12 @@ namespace InvestmentPortal.Controllers
             {
                 return Unauthorized(new
                 {
-                    message = "User is not verified.",
+                    message = "User is not registered.",
                     code = 401
                 });
             }
         }
+
 
         private string HashPassword(string password)
         {
