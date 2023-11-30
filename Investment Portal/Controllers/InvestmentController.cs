@@ -309,11 +309,9 @@ namespace Investment_Portal.Controllers
         //                code = 400
         //            });
         //        }
-
         //        foreach (var updateRequest in updateRequests)
         //        {
         //            var investment = _context.Investments.Find(updateRequest.InvestmentId);
-
         //            if (investment == null)
         //            {
         //                return NotFound(new
@@ -322,27 +320,21 @@ namespace Investment_Portal.Controllers
         //                    code = 404
         //                });
         //            }
-
         //            investment.Status = updateRequest.Status;
-
         //            if (updateRequest.Status == "Funded")
         //            {
-
         //                var strategies = _context.Strategy
         //                    .Where(s => s.InvestmentId == updateRequest.InvestmentId && s.Status == "Approved")
         //                    .ToList();
-
         //                foreach (var strategy in strategies)
         //                {
         //                    strategy.Status = "Funded";
         //                    _context.Entry(strategy).State = EntityState.Modified;
         //                }
-
         //                var clientEmail = _context.Client
         //          .Where(a => a.ClientId == investment.ClientId)
         //          .Select(a => a.Email)
         //          .FirstOrDefault();
-
         //                string clientSubject = "Investment Funded";
         //                string clientmsg = $@"
         //            <p>Dear ,</p>
@@ -407,6 +399,151 @@ namespace Investment_Portal.Controllers
         //        });
         //    }
         //}
+
+        // PUT api/investments/update-status
+        [HttpPut("Update-Investment-Status")]
+        public IActionResult UpdateInvestmentStatus([FromBody] List<InvestmentUpdate> updateRequests)
+        {
+            if (updateRequests == null || !ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid update status request data.",
+                    code = 400
+                });
+            }
+
+            try
+            {
+                foreach (var updateRequest in updateRequests)
+                {
+                    var investment = _context.Investments.Find(updateRequest.InvestmentId);
+
+                    if (investment == null)
+                    {
+                        return NotFound(new
+                        {
+                            message = $"Investment with ID {updateRequest.InvestmentId} not found.",
+                            code = 404
+                        });
+                    }
+
+                    investment.Status = updateRequest.Status;
+
+                    var strategies = _context.Strategy
+                    .Where(s => s.InvestmentId == updateRequest.InvestmentId)
+                    .ToList();
+
+
+
+                    foreach (var strategy in strategies)
+                    {
+                        strategy.Status = updateRequest.Status;
+                        _context.Entry(strategy).State = EntityState.Modified;
+                    }
+
+                    if (updateRequest.Status == "Approved")
+                    {
+                        var clientEmail = _context.Client
+                            .Where(a => a.ClientId == investment.ClientId)
+                            .Select(a => a.Email)
+                            .FirstOrDefault();
+
+                        string clientSubject = "Investment Approved";
+                        string clientmsg = $@"
+                        <p>Dear ,</p>
+                        <p>Your investment with ID {investment.InvestmentID} has been approved. Please wait for the investment to be funded. Thank you for choosing INCvest.</p>
+                        <p>Best regards,</p>
+                        <p>INCvest</p>
+                        <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
+                         ";
+
+                        SendEmail(clientEmail, clientmsg, clientSubject);
+
+                        var advisorEmail = _context.Advisor
+                            .Where(a => a.AdvisorId == investment.AdvisorId)
+                            .Select(a => a.Email)
+                            .FirstOrDefault();
+
+                        string advisorSubject = "Investment Approved - Fund Now";
+                        string advisormsg = $@"
+                        <p>Dear Advisor,</p>
+                        <p>We are excited to inform you that your client has approved the investment with ID {investment.InvestmentID}. This is a significant step forward in their financial journey, and your expertise is crucial in ensuring the success of this investment.</p>
+                        <p>Please proceed to fund this investment at your earliest convenience. If you have any specific insights or recommendations regarding the funding process, feel free to share them with the client to enhance their understanding.</p>
+                        <p>As always, your dedication to providing valuable financial guidance is highly appreciated. If you encounter any challenges or have questions, our support team is ready to assist you.</p>
+                        <p>Thank you for your continued contributions to INCvest. We look forward to the success of this investment.</p>
+                        <p>Best regards,</p>
+                        <p>INCvest</p>
+
+                        <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
+                        ";
+
+                        SendEmail(advisorEmail, advisormsg, advisorSubject);
+                    }
+                    else if (updateRequest.Status == "Rejected")
+                    {
+                        var advisorEmail = _context.Advisor
+                            .Where(a => a.AdvisorId == investment.AdvisorId)
+                            .Select(a => a.Email)
+                            .FirstOrDefault();
+
+                        string advisorSubject = "Investment Rejected - Create New Strategy";
+                        string advisormsg = $@"
+                        <p>Dear Advisor,</p>
+                        <p>We regret to inform you that your client has rejected the investment with ID {investment.InvestmentID}. While this particular strategy may not have been accepted, we encourage you to create a new investment strategy tailored to the client's financial goals.</p>
+                        <p>Your expertise is highly valued, and we believe that your next proposal could be the key to success for our clients. If you have any questions or need assistance in formulating a new strategy, please don't hesitate to reach out to our support team.</p>
+                        <p>Thank you for your dedication to INCvest. Your contributions are invaluable, and we're here to support you in assisting our clients.</p>
+                        <p>Best regards,</p>
+                        <p>INCvest</p>
+                        <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                        <style>
+                            .logo-text {{
+                                color: black;
+                            }}
+                            .dot {{
+                                color: #4b49ac;
+                            }}
+                        </style>
+                     ";
+
+                        SendEmail(advisorEmail, advisormsg, advisorSubject);
+                    }
+
+                    _context.SaveChanges();
+                }
+
+                return Ok(new
+                {  
+                    message = "Investment status and strategies updated successfully.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating investment status and strategies.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
 
 
         // PUT api/investments/{id}
