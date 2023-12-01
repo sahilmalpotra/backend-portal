@@ -31,6 +31,7 @@ namespace InvestmentPortal.Controllers
 
         }
 
+        /*
         [HttpPost("Add")]
         public async Task<IActionResult> AddStrategy([FromBody] Strategy strategy)
         {
@@ -158,8 +159,153 @@ namespace InvestmentPortal.Controllers
             } while (!isUnique);
             return customStrategyId;
         }
+        */
+        [HttpPost("Add")]
+        public async Task<IActionResult> AddStrategies([FromBody] List<Strategy> strategies)
+        {
+            if (strategies == null || !strategies.Any())
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid strategy data.",
+                    code = 400
+                });
+            }
 
+            try
+            {
+                // Assume all strategies have the same InvestmentId
+                var investmentId = strategies.First().InvestmentId;
 
+                Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == investmentId);
+
+                if (investment == null)
+                {
+                    return NotFound(new
+                    {
+                        message = "Investment not found.",
+                        code = 404
+                    });
+                }
+
+                // Calculate the sum of all strategy amounts
+                decimal sumOfStrategyAmounts = strategies.Sum(s => s.InvestmentAmount);
+
+                if (sumOfStrategyAmounts != investment.InvestmentAmount)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Sum of strategy amounts does not match the investment amount.",
+                        code = 400
+                    });
+                }
+
+                foreach (var strategy in strategies)
+                {
+                    strategy.ClientId = investment.ClientId;
+                    strategy.AdvisorId = investment.AdvisorId;
+
+                    if (strategy.InvestmentAmount > investment.InvestmentAmount)
+                    {
+                        return BadRequest(new
+                        {
+                            message = "Investment amount should be less than the total amount.",
+                            code = 400
+                        });
+                    }
+
+                    // Calculate the remaining amount only if the strategy is valid
+                    decimal sumOfPreviousStrategies = _context.Strategy
+                        .Where(s => s.InvestmentId == strategy.InvestmentId && s.Status != "Rejected")
+                        .Sum(s => s.InvestmentAmount);
+
+                    decimal remainingAmount = investment.InvestmentAmount - sumOfPreviousStrategies;
+
+                    if (strategy.InvestmentAmount > remainingAmount)
+                    {
+                        return BadRequest(new
+                        {
+                            message = "Strategy amount exceeds the remaining investment amount.",
+                            code = 400
+                        });
+                    }
+
+                    // Deduct the investment amount from the remaining amount
+                    investment.RemainingAmount = remainingAmount - strategy.InvestmentAmount;
+                    investment.Status = "In Progress";
+                    _context.SaveChanges();
+
+                    string customId = GenerateCustomStrategyId();
+                    strategy.StrategyId = customId;
+
+                    await _strategyService.AddStrategyAsync(strategy);
+                }
+
+                // Send email to the client (assuming you want to send it once for all strategies)
+                var clientEmail = _context.Client
+                    .Where(a => a.ClientId == investment.ClientId)
+                    .Select(a => a.Email)
+                    .FirstOrDefault();
+
+                string clientSubject = "New Strategy Proposed for Your Investment";
+                string clientmsg = $@"
+                <p>Dear,</p>
+                <p>Exciting news! One of our expert advisors has just proposed a new strategy for your investment on INCvest.</p>
+                <p>You can now log in to your account to review the details of this strategy and make an informed decision about your investment. Your financial journey is one step closer to success.</p>
+                <p>If you have any questions or need further guidance, please don't hesitate to reach out to our support team. We're here to assist you every step of the way.</p>
+                <p>Thank you for choosing INCvest for your investments. We look forward to your continued success.</p>
+                <p>Best regards,</p>
+                <p>INCvest</p>
+                <h1><a><span class='logo-text'>INCvest</span><span class='dot'>.</span></a></h1>
+                    <style>
+                        .logo-text {{
+                            color: black;
+                        }}
+                        .dot {{
+                            color: #4b49ac;
+                        }}
+                    </style>
+                ";
+                SendEmail(clientEmail, clientmsg, clientSubject);
+
+                return Ok(new
+                {
+                    message = "Strategies added successfully.",
+
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while adding the strategy.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
+
+        private string GenerateCustomStrategyId()
+        {
+            string customStrategyId;
+            bool isUnique = false;
+            int uniqueNumber = 1;
+            do
+            {
+                customStrategyId = "STR" + uniqueNumber.ToString("D4");
+                bool isIdUnique = !_context.Strategy.Any(s => s.StrategyId == customStrategyId);
+                if (isIdUnique)
+                {
+                    isUnique = true;
+                }
+                else
+                {
+                    uniqueNumber++;
+                }
+            } while (!isUnique);
+            return customStrategyId;
+        }
 
 
 
@@ -424,7 +570,7 @@ namespace InvestmentPortal.Controllers
 
 
                 // Check if the strategy's status is 'rejected' or 'completed' and the amount is credited
-                if (strategy.Status == "rejected" || strategy.Completed)
+                if (strategy.Status == "Rejected" || strategy.Completed)
                 {
                     await _strategyService.DeleteStrategyAsync(id);
 
