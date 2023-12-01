@@ -174,7 +174,7 @@ namespace InvestmentPortal.Controllers
 
             try
             {
-                // Assume all strategies have the same InvestmentId
+                
                 var investmentId = strategies.First().InvestmentId;
 
                 Investment investment = _context.Investments.FirstOrDefault(i => i.InvestmentID == investmentId);
@@ -188,7 +188,7 @@ namespace InvestmentPortal.Controllers
                     });
                 }
 
-                // Calculate the sum of all strategy amounts
+                
                 decimal sumOfStrategyAmounts = strategies.Sum(s => s.InvestmentAmount);
 
                 if (sumOfStrategyAmounts != investment.InvestmentAmount)
@@ -214,7 +214,7 @@ namespace InvestmentPortal.Controllers
                         });
                     }
 
-                    // Calculate the remaining amount only if the strategy is valid
+                   
                     decimal sumOfPreviousStrategies = _context.Strategy
                         .Where(s => s.InvestmentId == strategy.InvestmentId && s.Status != "Rejected")
                         .Sum(s => s.InvestmentAmount);
@@ -230,7 +230,7 @@ namespace InvestmentPortal.Controllers
                         });
                     }
 
-                    // Deduct the investment amount from the remaining amount
+                   
                     investment.RemainingAmount = remainingAmount - strategy.InvestmentAmount;
                     investment.Status = "In Progress";
                     _context.SaveChanges();
@@ -241,7 +241,7 @@ namespace InvestmentPortal.Controllers
                     await _strategyService.AddStrategyAsync(strategy);
                 }
 
-                // Send email to the client (assuming you want to send it once for all strategies)
+               
                 var clientEmail = _context.Client
                     .Where(a => a.ClientId == investment.ClientId)
                     .Select(a => a.Email)
@@ -428,7 +428,7 @@ namespace InvestmentPortal.Controllers
         }
 
 
-
+        /*
         [HttpGet("{clientId}/By-ClientId")]
         public async Task<IActionResult> GetStrategiesByClientId(string clientId)
         {
@@ -453,6 +453,71 @@ namespace InvestmentPortal.Controllers
                 {
                     message = "Strategies retrieved successfully.",
                     strategies,
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while retrieving strategies by client ID.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
+        */
+
+        [HttpGet("{clientId}/By-ClientId")]
+        public async Task<IActionResult> GetStrategiesByClientId(string clientId)
+        {
+            try
+            {
+                var investmentsWithZeroRemainingAmount = _context.Investments
+                    .Where(i => i.ClientId == clientId && i.RemainingAmount == 0 && i.Status == "In Progress")
+                    .ToList();
+
+                if (!investmentsWithZeroRemainingAmount.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "Your strategies are on the way!",
+                        code = 404
+                    });
+                }
+
+               
+                var investmentBundles = new List<InvestmentBundleDTO>();
+
+                foreach (var investment in investmentsWithZeroRemainingAmount)
+                {
+                    
+                    var strategies = (await _strategyService.GetStrategiesByInvestmentIdAsync(investment.InvestmentID)).ToList();
+
+                   
+                    var investmentBundle = new InvestmentBundleDTO
+                    {
+                        InvestmentId = investment.InvestmentID,
+                        CreatedDate = investment.CreatedDate,
+                        Strategies = strategies
+                    };
+
+                    investmentBundles.Add(investmentBundle);
+                }
+
+                if (!investmentBundles.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "No strategies found for the specified client ID and investment conditions.",
+                        code = 404
+                    });
+                }
+
+                return Ok(new
+                {
+                    message = "Strategies retrieved successfully.",
+                    investmentBundles,
                     code = 200
                 });
             }
