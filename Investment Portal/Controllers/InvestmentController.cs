@@ -498,6 +498,9 @@ namespace Investment_Portal.Controllers
                     }
                     else if (updateRequest.Status == "Rejected")
                     {
+                        investment.RemainingAmount = investment.InvestmentAmount;
+                        _context.SaveChanges();
+
                         var advisorEmail = _context.Advisor
                             .Where(a => a.AdvisorId == investment.AdvisorId)
                             .Select(a => a.Email)
