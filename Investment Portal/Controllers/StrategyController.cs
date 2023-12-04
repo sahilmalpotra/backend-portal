@@ -428,13 +428,13 @@ namespace InvestmentPortal.Controllers
         }
 
 
-        /*
-        [HttpGet("{clientId}/By-ClientId")]
-        public async Task<IActionResult> GetStrategiesByClientId(string clientId)
+
+        [HttpGet("{clientId}/All-Strategy")]
+        public async Task<IActionResult> GetAllStrategiesByClientId(string clientId)
         {
             try
             {
-                var strategies = await _strategyService.GetStrategiesByClientIdAsync(clientId);
+                var strategies = await _strategyService.GetAllStrategiesByClientIdAsync(clientId);
 
 
 
@@ -466,9 +466,9 @@ namespace InvestmentPortal.Controllers
                 });
             }
         }
-        */
 
-        [HttpGet("{clientId}/By-ClientId")]
+
+        [HttpGet("{clientId}/Newly-Proposed")]
         public async Task<IActionResult> GetStrategiesByClientId(string clientId)
         {
             try
@@ -485,16 +485,12 @@ namespace InvestmentPortal.Controllers
                         code = 404
                     });
                 }
-
-               
                 var investmentBundles = new List<InvestmentBundleDTO>();
 
                 foreach (var investment in investmentsWithZeroRemainingAmount)
                 {
                     
                     var strategies = (await _strategyService.GetStrategiesByInvestmentIdAsync(investment.InvestmentID)).ToList();
-
-                   
                     var investmentBundle = new InvestmentBundleDTO
                     {
                         InvestmentId = investment.InvestmentID,
@@ -531,7 +527,6 @@ namespace InvestmentPortal.Controllers
                 });
             }
         }
-
 
 
 

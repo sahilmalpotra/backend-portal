@@ -49,12 +49,24 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(s => s.StrategyId == strategyId);
         }
 
-        public async Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(string clientId)
+        public async Task<IEnumerable<Strategy>> GetAllStrategiesByClientIdAsync(string clientId)
         {
             var strategies = await _context.Strategy
-            .Where(s => s.ClientId == clientId)
-            .ToListAsync();
+               .Where(s => s.ClientId == clientId)
+                .ToListAsync();
+            return strategies.OrderBy(s => strategies.IndexOf(s));
+        }
 
+        public async Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(string clientId)
+        {
+            var investmentIds = await _context.Investments
+                .Where(i => i.ClientId == clientId)
+                .Select(i => i.InvestmentID)
+                .ToListAsync();
+
+            var strategies = await _context.Strategy
+           .Where(s => investmentIds.Contains(s.InvestmentId))
+            .ToListAsync();
             return strategies.OrderBy(s => strategies.IndexOf(s));
         }
 
