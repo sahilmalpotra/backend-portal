@@ -489,8 +489,11 @@ namespace InvestmentPortal.Controllers
 
                 foreach (var investment in investmentsWithZeroRemainingAmount)
                 {
-                    
-                    var strategies = (await _strategyService.GetStrategiesByInvestmentIdAsync(investment.InvestmentID)).ToList();
+
+                    var strategies = (await _strategyService.GetStrategiesByInvestmentIdAsync(investment.InvestmentID))
+                   .Where(s => s.Status != "Rejected")
+                   .ToList();
+
                     var investmentBundle = new InvestmentBundleDTO
                     {
                         InvestmentId = investment.InvestmentID,
