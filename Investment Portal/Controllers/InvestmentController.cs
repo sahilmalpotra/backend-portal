@@ -626,5 +626,70 @@ namespace Investment_Portal.Controllers
             smtp.Disconnect(true);
             
         }
+
+        [HttpPut("update-status-to-funded")]
+        public IActionResult UpdateInvestmentAndStrategyStatus([FromBody] List<InvestmentUpdate> updateRequests)
+        {
+            if (updateRequests == null || !ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid update status request data.",
+                    code = 400
+                });
+            }
+
+            try
+            {
+                foreach (var updateRequest in updateRequests)
+                {
+                    var investment = _context.Investments.Find(updateRequest.InvestmentId);
+
+                    if (investment == null)
+                    {
+                        return NotFound(new
+                        {
+                            message = $"Investment with ID {updateRequest.InvestmentId} not found.",
+                            code = 404
+                        });
+                    }
+
+                    investment.Status = updateRequest.Status;
+
+                    if (updateRequest.Status == "Funded")
+                    {
+                        var strategies = _context.Strategy
+                         .Where(s => s.InvestmentId == updateRequest.InvestmentId && s.Status == "Approved")
+                         .ToList();
+
+
+                        foreach (var strategy in strategies)
+                        {
+                            strategy.Status = "Funded";
+                            _context.Entry(strategy).State = EntityState.Modified;
+                        }
+
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return Ok(new
+                {
+                    message = "Investment status and strategies updated successfully.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating investment status and strategies.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
+
     }
 }
