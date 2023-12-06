@@ -531,6 +531,85 @@ namespace InvestmentPortal.Controllers
             }
         }
 
+        [HttpPut("{clientId}/Update-InvestmentBundle")]
+        public async Task<IActionResult> UpdateInvestmentBundle([FromBody] InvestmentBundleUpdateDTO updatedInvestmentBundle, string clientId)
+        {
+            try
+            {
+                if (updatedInvestmentBundle == null || updatedInvestmentBundle.Strategies == null || !updatedInvestmentBundle.Strategies.Any())
+                {
+                    return BadRequest(new
+                    {
+                        message = "Invalid updated investment bundle data.",
+                        code = 400
+                    });
+                }
+
+                var investmentsWithZeroRemainingAmount = _context.Investments
+                    .Where(i => i.ClientId == clientId && i.RemainingAmount == 0 && i.Status == "In Progress")
+                    .ToList();
+
+                if (!investmentsWithZeroRemainingAmount.Any())
+                {
+                    return NotFound(new
+                    {
+                        message = "Your strategies are on the way!",
+                        code = 404
+                    });
+                }
+
+                var investment = investmentsWithZeroRemainingAmount.FirstOrDefault(i => i.InvestmentID == updatedInvestmentBundle.InvestmentId);
+
+                if (investment == null)
+                {
+                    return NotFound(new
+                    {
+                        message = $"Investment not found for InvestmentId: {updatedInvestmentBundle.InvestmentId}",
+                        code = 404
+                    });
+                }
+
+                decimal sumOfUpdatedAmounts = updatedInvestmentBundle.Strategies.Sum(s => s.InvestmentAmount);
+
+                if (sumOfUpdatedAmounts != investment.InvestmentAmount)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Sum of updated strategy amounts does not match the investment amount.",
+                        code = 400
+                    });
+                }
+
+                investment.RemainingAmount = investment.InvestmentAmount - sumOfUpdatedAmounts;
+                await _context.SaveChangesAsync();
+                
+                foreach (var updatedStrategy in updatedInvestmentBundle.Strategies)
+                {
+                    var existingStrategy = await _strategyService.GetStrategyByStrategyIdAsync(updatedStrategy.StrategyId);
+
+                    if (existingStrategy != null)
+                    {
+                        existingStrategy.InvestmentAmount = updatedStrategy.InvestmentAmount;
+                        await _strategyService.UpdateStrategyAsync(existingStrategy);
+                    }
+                }
+
+                return Ok(new
+                {
+                    message = "Investment bundle updated successfully.",
+                    code = 200
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating investment bundle.",
+                    details = ex.Message,
+                    code = 500
+                });
+            }
+        }
 
 
 

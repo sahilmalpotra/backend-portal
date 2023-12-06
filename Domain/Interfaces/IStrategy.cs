@@ -12,9 +12,10 @@ namespace Domain.Interfaces
         Task<IEnumerable<Strategy>> GetStrategiesAsync();
         Task<IEnumerable<Strategy>> GetStrategiesByInvestmentIdAsync(string investmentId);
         Task<Strategy> GetStrategyByStrategyIdAsync(string strategyId);
-        Task<IEnumerable<Strategy>> GetAllStrategiesByClientIdAsync(string clientId);
 
+        Task<IEnumerable<Strategy>> GetAllStrategiesByClientIdAsync(string clientId);
         Task<IEnumerable<Strategy>> GetStrategiesByClientIdAsync(string clientId);
+        Task UpdateInvestmentAmountAsync(string strategyId, decimal newInvestmentAmount);
 
         Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(string advisorId);
         Task<IEnumerable<Strategy>> GetApprovedStrategiesByAdvisorIdAsync(string advisorId);

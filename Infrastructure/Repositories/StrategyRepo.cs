@@ -70,6 +70,17 @@ namespace Infrastructure.Repositories
             return strategies.OrderBy(s => strategies.IndexOf(s));
         }
 
+        public async Task UpdateInvestmentAmountAsync(string strategyId, decimal newInvestmentAmount)
+        {
+            var strategy = await _context.Strategy.FindAsync(strategyId);
+
+            if (strategy != null)
+            {
+                strategy.InvestmentAmount = newInvestmentAmount;
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<Strategy>> GetStrategiesByAdvisorIdAsync(string advisorId)
         {
             var strategies = await _context.Strategy
