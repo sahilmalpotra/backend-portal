@@ -22,12 +22,13 @@ namespace InvestmentPortal.Controllers
     {
         private readonly IStrategy _strategyService;
         private readonly AppDbContext _context;
-
+        private readonly List<PastData> companies;
 
         public StrategyController(IStrategy strategyService, AppDbContext context)
         {
             _strategyService = strategyService;
             _context = context;
+            this.companies = companies;
 
         }
 
@@ -465,6 +466,61 @@ namespace InvestmentPortal.Controllers
                     code = 500
                 });
             }
+        }
+
+        [HttpGet("company/{stockdata}")]
+        public async Task<IActionResult> GetStockData(string name)
+        {
+            var company = companies.Find(c => c.name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (company == null)
+            {
+                return NotFound($"Company '{name}' not found");
+            }
+
+            return Ok(company.StockHistory);
+        }
+        [HttpGet("comapnyname/{name-past-data}")]
+        public IActionResult GetCompany(string name)
+        {
+            var company = companies.Find(c => c.name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (company == null)
+            {
+                return NotFound($"Company '{name}' not found");
+            }
+
+            return Ok(company);
+        }
+        [HttpPost("{name}/companyname")]
+        public async Task<IActionResult> AddCompany([FromBody] PastData newCompany)
+        {
+            if (newCompany == null)
+            {
+                return BadRequest("Company data is null");
+            }
+
+
+            var stockData = new StockData { year = DateTime.Now.Year, price = 100.0M }; 
+
+
+            return Ok($"Company '{newCompany.name}' added successfully.");
+        }
+
+        [HttpPost("{name}/stockdata")]
+        public async Task<IActionResult> PostStockData(string name, [FromBody] StockData stockData)
+        {
+            var company = companies.Find(c => c.name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (company == null)
+            {
+                return NotFound($"Company '{name}' not found");
+            }
+
+            // Add stock data for the given year
+            company.StockHistory.Add(stockData);
+
+            return CreatedAtAction(nameof(GetCompany), new { name = company.name }, company);
         }
 
 

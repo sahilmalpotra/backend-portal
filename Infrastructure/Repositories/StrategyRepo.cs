@@ -13,10 +13,12 @@ namespace Infrastructure.Repositories
     public class StrategyRepo : IStrategy
     {
         private readonly AppDbContext _context;
+        private List<PastData> companies;
 
         public StrategyRepo(AppDbContext context)
         {
             _context = context;
+            this.companies = companies;
         }
 
 
@@ -47,6 +49,54 @@ namespace Infrastructure.Repositories
         {
             return await _context.Strategy
                 .FirstOrDefaultAsync(s => s.StrategyId == strategyId);
+        }
+
+        public async Task<IEnumerable<StockData>> GetStockData(string companyName)
+        {
+            var company = companies.Find(c => c.name.Equals(companyName, StringComparison.OrdinalIgnoreCase));
+
+            if (company == null)
+            {
+                // You may want to return an empty list or handle this case differently
+                return new List<StockData>();
+            }
+
+            return company.StockHistory;
+        }
+        public async Task<bool> AddCompany(PastData pastData)
+        {
+
+
+            var newCompany = new PastData();
+            {
+                newCompany.name = pastData.name;
+
+            };
+
+
+            companies.Add(newCompany);
+
+            return true;
+        }
+
+        public PastData GetCompany(string name)
+        {
+            return companies.Find(c => c.name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+        public async Task<bool> PostStockData(string companyName, StockData stockData)
+        {
+            var company = companies.Find(c => c.name.Equals(companyName, StringComparison.OrdinalIgnoreCase));
+
+            if (company == null)
+            {
+
+                return false;
+            }
+
+
+            company.StockHistory.Add(stockData);
+
+            return true;
         }
 
         public async Task<IEnumerable<Strategy>> GetAllStrategiesByClientIdAsync(string clientId)
