@@ -30,6 +30,10 @@ namespace Domain.Entities
         public string InvestmentName { get; set; }
 
         [Required]
+        [MaxLength (100)]
+        public string Industry { get; set;}
+
+        [Required]
         public string ClientId { get; set; }
 
         [Required]

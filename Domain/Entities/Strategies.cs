@@ -14,6 +14,10 @@ namespace Domain.Entities
         public string StartegyName { get; set; }
 
         [Required]
+        [MaxLength(100)]
+        public string Industry { get; set; }
+
+        [Required]
         public string StrategyType { get; set; }
 
         [Required]
