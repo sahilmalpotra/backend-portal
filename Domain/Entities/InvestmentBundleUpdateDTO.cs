@@ -16,6 +16,7 @@ namespace Domain.Entities
     {
         public string StrategyId { get; set; }
         public decimal InvestmentAmount { get; set; }
+        public decimal ExpectedAmount { get; set; }
     }
 
 }
