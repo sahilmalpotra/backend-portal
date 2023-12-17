@@ -590,6 +590,7 @@ namespace InvestmentPortal.Controllers
                     if (existingStrategy != null)
                     {
                         existingStrategy.InvestmentAmount = updatedStrategy.InvestmentAmount;
+                        existingStrategy.ExpectedAmount = updatedStrategy.ExpectedAmount;
                         await _strategyService.UpdateStrategyAsync(existingStrategy);
                     }
                 }
